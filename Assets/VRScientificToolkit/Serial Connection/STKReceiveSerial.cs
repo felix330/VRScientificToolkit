@@ -5,10 +5,14 @@ using System.IO.Ports;
 
 public class STKReceiveSerial : MonoBehaviour {
 
-    SerialPort stream = new SerialPort("COM4", 9600);
+    public string port;
+    public int baudRate;
+
+    private SerialPort stream;
     private string currentValue;
 	// Use this for initialization
 	void Start () {
+        stream = new SerialPort(port, baudRate);
         stream.Open();
 	}
 	

@@ -21,14 +21,5 @@ public class WObjectCreation : EditorWindow {
         GUILayout.Button("Create Player Entity");
     }
 
-    [MenuItem("Window/VR Scientific Toolkit/Create Test Event")]
-    public static void CreateEvent()
-    {
-        STKEvent newEvent = new STKEvent
-        {
-            name = "TestName"
-        };
-
-        ProjectWindowUtil.CreateAsset(newEvent,"Assets/VRScientificToolkit/Events/"+newEvent.name);
-    }
+    
 }

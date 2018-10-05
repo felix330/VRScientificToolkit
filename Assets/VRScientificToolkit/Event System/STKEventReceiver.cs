@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class STKEventReceiver : MonoBehaviour {
+public static class STKEventReceiver {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static STKEvent[][] savedEvents;
+
+	public static void ReceiveEvent(STKEvent e)
+    {
+        Debug.Log("Received Event " + e.eventName);
+
+    }
 }
