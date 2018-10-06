@@ -4,11 +4,10 @@ using UnityEngine;
 
 public static class STKEventReceiver {
 
-    public static STKEvent[][] savedEvents;
+    public static List<STKEvent> savedEvents = new List<STKEvent>();
 
 	public static void ReceiveEvent(STKEvent e)
     {
-        Debug.Log("Received Event " + e.eventName);
-
+        savedEvents.Add(e);
     }
 }

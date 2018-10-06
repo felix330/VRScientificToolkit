@@ -10,6 +10,7 @@ public class TestEventValues : MonoBehaviour {
         sender = GetComponent<STKEventSender>();
         sender.eventToSend.SetValue("Name", "Franz");
         sender.eventToSend.SetValue("Age", 42);
+        sender.eventToSend.SetValue("Gender", "M");
 	}
 	
 	// Update is called once per frame

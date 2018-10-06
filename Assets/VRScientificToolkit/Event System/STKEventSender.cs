@@ -17,6 +17,7 @@ public class STKEventSender : MonoBehaviour {
 		
 	}
 
+    [ContextMenu("Deploy")]
     void Deploy()
     {
         STKEventReceiver.ReceiveEvent(eventToSend);

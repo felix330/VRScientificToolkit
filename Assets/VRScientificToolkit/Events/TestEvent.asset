@@ -11,4 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ddec862d19d4674b90cbebf15eafc4c, type: 3}
   m_Name: TestEvent
   m_EditorClassIdentifier: 
-  eventName: 
+  parameters:
+  - name: Name
+    type: 1
+  - name: Age
+    type: 2
+  - name: Gender
+    type: 1
+  eventName: TestEvent
