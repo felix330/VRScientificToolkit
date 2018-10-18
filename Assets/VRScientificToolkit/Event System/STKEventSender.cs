@@ -11,11 +11,6 @@ public class STKEventSender : MonoBehaviour {
 	void Awake () {
         eventToSend = Instantiate(eventBase);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     [ContextMenu("Deploy")]
     void Deploy()

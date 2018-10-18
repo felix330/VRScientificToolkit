@@ -15,7 +15,7 @@ MonoBehaviour:
   - name: Name
     type: 1
   - name: Age
-    type: 2
+    type: 0
   - name: Gender
     type: 1
   eventName: TestEvent
