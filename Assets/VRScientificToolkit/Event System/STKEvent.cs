@@ -10,6 +10,7 @@ public struct EventParameter
 {
     public string name;
     public EventAllowedType type;
+    public System.Type newType;
 }
 
 [CreateAssetMenu(menuName = "VR Scientific Toolkit/STKEvent")]
