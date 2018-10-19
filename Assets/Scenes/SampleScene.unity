@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
+  - component: {fileID: 534669908}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -282,6 +283,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bef5718cfb27e14195ebe701333d5ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &534669908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b7599f62ae11c419ddebca054134c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: COM4
+  baudRate: 9600
 --- !u!1 &1976974501
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,4 +336,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd71cc24f1e98f74d9566845b43f2edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackedObject: {fileID: 1976974501}
+  trackedObject: {fileID: 534669902}
