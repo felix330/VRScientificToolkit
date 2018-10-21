@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Reflection;
 
 [CustomEditor(typeof(STKTrackObject))]
 public class STKTrackEditor : Editor {
@@ -28,6 +29,14 @@ public class STKTrackEditor : Editor {
                 foreach (var varToCheck in c.GetType().GetProperties())
                 {
                     if (STKEventTypeChecker.IsValid(varToCheck.PropertyType))
+                    {
+                        EditorGUILayout.Toggle(varToCheck.Name, false);
+                    }
+                }
+
+                foreach (var varToCheck in c.GetType().GetFields())
+                {
+                    if (STKEventTypeChecker.IsValid(varToCheck.FieldType))
                     {
                         EditorGUILayout.Toggle(varToCheck.Name, false);
                     }
