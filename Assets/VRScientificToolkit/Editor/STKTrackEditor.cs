@@ -23,6 +23,8 @@ public class STKTrackEditor : EditorWindow
         trackedObject = Selection.activeGameObject;
         if (lastTrackedObject == null)
         {
+            trackedComponents = new bool[trackedObject.GetComponents(typeof(Component)).Length];
+            trackedVariables = new bool[trackedObject.GetComponents(typeof(Component)).Length][];
             lastTrackedObject = trackedObject;
         }
     }
@@ -38,8 +40,6 @@ public class STKTrackEditor : EditorWindow
 
     private void OnGUI()
     {
-
-
         if (trackedObject != null)
         {
             if (trackedObject != lastTrackedObject)
@@ -52,14 +52,17 @@ public class STKTrackEditor : EditorWindow
             for (int i = 0; i < trackedObject.GetComponents(typeof(Component)).Length; i++)
             {
                 Component c = trackedObject.GetComponents(typeof(Component))[i];
-
-                EditorStyles.label.fontStyle = FontStyle.Bold;
-                trackedComponents[i] = EditorGUILayout.Toggle(c.GetType().ToString(), trackedComponents[i]);
-                EditorStyles.label.fontStyle = FontStyle.Normal;
-                if (trackedObject != lastTrackedObject)
+                if (c != null)
                 {
-                    trackedVariables[i] = new bool[c.GetType().GetProperties().Length + c.GetType().GetFields().Length];
+                    EditorStyles.label.fontStyle = FontStyle.Bold;
+                    trackedComponents[i] = EditorGUILayout.Toggle(c.GetType().ToString(), trackedComponents[i]);
+                    EditorStyles.label.fontStyle = FontStyle.Normal;
+                    if (trackedObject != lastTrackedObject)
+                    {
+                        trackedVariables[i] = new bool[c.GetType().GetProperties().Length + c.GetType().GetFields().Length];
+                    }
                 }
+                
                 //Cycle through variables
                 if (trackedComponents[i] == true)
                 {
