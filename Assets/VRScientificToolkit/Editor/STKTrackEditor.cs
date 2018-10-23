@@ -13,6 +13,11 @@ public class STKTrackEditor : Editor {
     void OnEnable()
     {
         currentTarget = (STKTrackObject)target;
+
+        if (currentTarget.trackedObject == null)
+        {
+            currentTarget.trackedObject = (GameObject)currentTarget.gameObject;
+        }
     }
 
     public override void OnInspectorGUI()
@@ -27,6 +32,7 @@ public class STKTrackEditor : Editor {
                 currentTarget.trackedComponents = new bool[currentTarget.trackedObject.GetComponents(typeof(Component)).Length];
                 currentTarget.trackedVariables = new bool[currentTarget.trackedObject.GetComponents(typeof(Component)).Length][];
             }
+            EditorGUILayout.LabelField("Select the components and variables you want to track:");
             //Cycle through components of the tracked object
             for (int i = 0; i < currentTarget.trackedObject.GetComponents(typeof(Component)).Length; i++)
             {
@@ -39,7 +45,6 @@ public class STKTrackEditor : Editor {
                     if (currentTarget.trackedObject != lastTrackedObject)
                     {
                         currentTarget.trackedVariables[i] = new bool[c.GetType().GetProperties().Length + c.GetType().GetFields().Length];
-                        Debug.Log("Setting array");
                     }
                     //Cycle through variables
                     if (currentTarget.trackedComponents[i] == true)
@@ -56,7 +61,7 @@ public class STKTrackEditor : Editor {
 
                         for (int j = c.GetType().GetProperties().Length; j < c.GetType().GetFields().Length + c.GetType().GetProperties().Length; j++)
                         {
-                            var varToCheck = c.GetType().GetFields()[j];
+                            var varToCheck = c.GetType().GetFields()[j-c.GetType().GetProperties().Length];
                             if (STKEventTypeChecker.IsValid(varToCheck.FieldType))
                             {
                                 currentTarget.trackedVariables[i][j] = EditorGUILayout.Toggle(varToCheck.Name, currentTarget.trackedVariables[i][j]);
