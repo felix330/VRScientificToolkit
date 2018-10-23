@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 196365701}
   - component: {fileID: 196365700}
   - component: {fileID: 196365704}
+  - component: {fileID: 196365705}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -276,6 +277,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeca0e56102a7c748887da2071dd766d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &196365705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 196365699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd71cc24f1e98f74d9566845b43f2edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedObject: {fileID: 196365699}
+  trackedComponents: 010000000000
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +303,7 @@ GameObject:
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
   - component: {fileID: 534669908}
+  - component: {fileID: 534669909}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -393,6 +408,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   port: COM4
   baudRate: 9600
+  currentValue: 
+--- !u!114 &534669909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd71cc24f1e98f74d9566845b43f2edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedObject: {fileID: 534669902}
+  trackedComponents: 01000100000000
 --- !u!1 &1976974501
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,3 +463,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackedObject: {fileID: 534669902}
+  trackedComponents: 

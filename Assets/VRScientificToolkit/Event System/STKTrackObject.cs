@@ -8,4 +8,7 @@ public class STKTrackObject : MonoBehaviour {
 
     public GameObject trackedObject;
 
+    public bool[] trackedComponents;
+    public bool[][] trackedVariables;
+
 }

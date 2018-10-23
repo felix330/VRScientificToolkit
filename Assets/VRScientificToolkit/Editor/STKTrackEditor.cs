@@ -6,44 +6,71 @@ using System.Reflection;
 
 [CustomEditor(typeof(STKTrackObject))]
 public class STKTrackEditor : Editor {
-    
+
+    public GameObject lastTrackedObject;
+    STKTrackObject currentTarget;
 
     void OnEnable()
     {
-
+        currentTarget = (STKTrackObject)target;
     }
 
     public override void OnInspectorGUI()
     {
-        STKTrackObject currentTarget = (STKTrackObject)target;
         currentTarget.trackedObject = (GameObject)EditorGUILayout.ObjectField("Object to track: ",currentTarget.trackedObject,typeof(GameObject),true);
+        
 
-        foreach (Component c in currentTarget.trackedObject.GetComponents(typeof(Component)))
+        if (currentTarget.trackedObject != null)
         {
-            if (c.GetType() != typeof(STKTrackObject))
+            if (currentTarget.trackedObject != lastTrackedObject)
             {
-                EditorStyles.label.fontStyle = FontStyle.Bold;
-                EditorGUILayout.Toggle(c.GetType().ToString(), false);
-                EditorStyles.label.fontStyle = FontStyle.Normal;
-                EditorGUI.indentLevel++;
-                foreach (var varToCheck in c.GetType().GetProperties())
+                currentTarget.trackedComponents = new bool[currentTarget.trackedObject.GetComponents(typeof(Component)).Length];
+                currentTarget.trackedVariables = new bool[currentTarget.trackedObject.GetComponents(typeof(Component)).Length][];
+            }
+            //Cycle through components of the tracked object
+            for (int i = 0; i < currentTarget.trackedObject.GetComponents(typeof(Component)).Length; i++)
+            {
+                Component c = currentTarget.trackedObject.GetComponents(typeof(Component))[i];
+                if (c.GetType() != typeof(STKTrackObject))
                 {
-                    if (STKEventTypeChecker.IsValid(varToCheck.PropertyType))
+                    EditorStyles.label.fontStyle = FontStyle.Bold;
+                    currentTarget.trackedComponents[i] = EditorGUILayout.Toggle(c.GetType().ToString(), currentTarget.trackedComponents[i]);
+                    EditorStyles.label.fontStyle = FontStyle.Normal;
+                    if (currentTarget.trackedObject != lastTrackedObject)
                     {
-                        EditorGUILayout.Toggle(varToCheck.Name, false);
+                        currentTarget.trackedVariables[i] = new bool[c.GetType().GetProperties().Length + c.GetType().GetFields().Length];
+                        Debug.Log("Setting array");
                     }
-                }
+                    //Cycle through variables
+                    if (currentTarget.trackedComponents[i] == true)
+                    {
+                        EditorGUI.indentLevel++;
+                        for (int j = 0; j < c.GetType().GetProperties().Length; j++)
+                        {
+                            var varToCheck = c.GetType().GetProperties()[j];
+                            if (STKEventTypeChecker.IsValid(varToCheck.PropertyType))
+                            {
+                                currentTarget.trackedVariables[i][j] = EditorGUILayout.Toggle(varToCheck.Name, currentTarget.trackedVariables[i][j]);
+                            }
+                        }
 
-                foreach (var varToCheck in c.GetType().GetFields())
-                {
-                    if (STKEventTypeChecker.IsValid(varToCheck.FieldType))
-                    {
-                        EditorGUILayout.Toggle(varToCheck.Name, false);
+                        for (int j = c.GetType().GetProperties().Length; j < c.GetType().GetFields().Length + c.GetType().GetProperties().Length; j++)
+                        {
+                            var varToCheck = c.GetType().GetFields()[j];
+                            if (STKEventTypeChecker.IsValid(varToCheck.FieldType))
+                            {
+                                currentTarget.trackedVariables[i][j] = EditorGUILayout.Toggle(varToCheck.Name, currentTarget.trackedVariables[i][j]);
+                            }
+                        }
+                        EditorGUI.indentLevel--;
                     }
+
                 }
-                EditorGUI.indentLevel--;
             }
         }
+        
+
+        lastTrackedObject = currentTarget.trackedObject;
     }
 
 }
