@@ -115,7 +115,7 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        newEvent.AddParameter(c.GetType().GetProperties()[j].Name, c.GetType().GetProperties()[j].GetType());
+                        newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }), c.GetType().GetProperties()[j].GetType());
                     }
                 }
 
@@ -123,7 +123,7 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        newEvent.AddParameter(c.GetType().GetFields()[j- c.GetType().GetProperties().Length].Name, c.GetType().GetFields()[j- c.GetType().GetProperties().Length].GetType());
+                        newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }), c.GetType().GetFields()[j - c.GetType().GetProperties().Length].GetType());
                     }
                 }
             }
