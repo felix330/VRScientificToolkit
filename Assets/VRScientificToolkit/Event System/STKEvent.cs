@@ -10,6 +10,7 @@ public class EventParameter
     public string name;
     public System.Type systemType;
     public int typeIndex;
+    public bool hideFromInspector;
 
     public void SetTypeFromIndex()
     {
@@ -28,9 +29,30 @@ public class STKEvent : ScriptableObject
     private int uniqueID;
     private float time;
 
-    public void OnEnable()
+    public void AddParameter(string name, System.Type type)
     {
-        Debug.Log("Onenable");
+        if (parameters == null)
+        {
+            parameters = new EventParameter[1];
+            parameters[0] = new EventParameter();
+            parameters[0].name = name;
+            parameters[0].systemType = type;
+            parameters[0].hideFromInspector = true;
+            return;
+        }
+
+        EventParameter[] oldParameters = parameters;
+        parameters = new EventParameter[oldParameters.Length + 1];
+
+        for (int i = 0; i < oldParameters.Length; i++)
+        {
+            parameters[i] = oldParameters[i];
+        }
+
+        parameters[parameters.Length - 1] = new EventParameter();
+        parameters[parameters.Length - 1].name = name;
+        parameters[parameters.Length - 1].systemType = type;
+        parameters[parameters.Length - 1].hideFromInspector = true;
     }
 
     public void SetValue(string key, object value)

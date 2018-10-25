@@ -16,8 +16,18 @@ public class STKEventEditor : PropertyDrawer {
         }
 
         EditorGUI.indentLevel++;
-        EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, 17), property.FindPropertyRelative("name"));
-        property.FindPropertyRelative("typeIndex").intValue = EditorGUI.Popup(new Rect(position.x, position.y + 20f, position.width, 17), property.FindPropertyRelative("typeIndex").intValue, choices);
+
+        
+
+        if (property.FindPropertyRelative("hideFromInspector").boolValue == false)
+        {
+            EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, 17), property.FindPropertyRelative("name"));
+            property.FindPropertyRelative("typeIndex").intValue = EditorGUI.Popup(new Rect(position.x, position.y + 20f, position.width, 17), property.FindPropertyRelative("typeIndex").intValue, choices);
+        } else
+        {
+            EditorGUI.LabelField(new Rect(position.x, position.y, position.width, 17), property.FindPropertyRelative("name").stringValue);
+        }
+        
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

@@ -21,7 +21,7 @@ public class STKTrackEditor : EditorWindow
     void OnEnable()
     {
         trackedObject = Selection.activeGameObject;
-        if (lastTrackedObject == null)
+        if (lastTrackedObject == null && trackedObject != null)
         {
             trackedComponents = new bool[trackedObject.GetComponents(typeof(Component)).Length];
             trackedVariables = new bool[trackedObject.GetComponents(typeof(Component)).Length][];
@@ -115,7 +115,7 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-
+                        newEvent.AddParameter(c.GetType().GetProperties()[j].Name, c.GetType().GetProperties()[j].GetType());
                     }
                 }
 
@@ -123,7 +123,7 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-
+                        newEvent.AddParameter(c.GetType().GetFields()[j- c.GetType().GetProperties().Length].Name, c.GetType().GetFields()[j- c.GetType().GetProperties().Length].GetType());
                     }
                 }
             }
