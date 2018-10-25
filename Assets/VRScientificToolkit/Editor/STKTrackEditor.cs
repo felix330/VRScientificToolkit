@@ -86,13 +86,50 @@ public class STKTrackEditor : EditorWindow
                     }
                     EditorGUI.indentLevel--;
                 }
-
-
             }
+            if (GUILayout.Button("Create Tracker"))
+            {
+                CreateEvent();
+            }
+        } else
+        {
+            EditorGUILayout.LabelField("Please select a GameObject to track in the inspector.");
         }
 
 
         lastTrackedObject = trackedObject;
+    }
+
+    private void CreateEvent()
+    {
+        STKEvent newEvent = (STKEvent)ScriptableObject.CreateInstance("STKEvent");
+
+        for (int i = 0; i < trackedObject.GetComponents(typeof(Component)).Length; i++)
+        {
+            Component c = trackedObject.GetComponents(typeof(Component))[i];
+
+            //Cycle through variables
+            if (trackedComponents[i] == true)
+            {
+                for (int j = 0; j < c.GetType().GetProperties().Length; j++)
+                {
+                    if (trackedVariables[i][j])
+                    {
+
+                    }
+                }
+
+                for (int j = c.GetType().GetProperties().Length; j < c.GetType().GetFields().Length + c.GetType().GetProperties().Length; j++)
+                {
+                    if (trackedVariables[i][j])
+                    {
+
+                    }
+                }
+            }
+        }
+
+        AssetDatabase.CreateAsset(newEvent, "Assets/VRScientificToolkit/Events/Track"+trackedObject.gameObject.name+trackedObject.gameObject.GetInstanceID().ToString()+".asset");
     }
 
 }
