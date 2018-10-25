@@ -3,13 +3,11 @@ using UnityEditor;
 using System.IO;
 using System.Collections;
 
-public enum EventAllowedType { Integer, String, Float, Boolean}
 
 [System.Serializable]
 public class EventParameter
 {
     public string name;
-    public EventAllowedType type;
     public System.Type systemType;
     public int typeIndex;
 
@@ -46,47 +44,9 @@ public class STKEvent : ScriptableObject
             }
             if (key == p.name)
             {
-                switch(p.type)
+                if (value.GetType() == p.systemType)
                 {
-                    case EventAllowedType.Integer:
-                        if (value.GetType() == typeof(int))
-                        {
-                            objects.Add(key, value);
-                        } else
-                        {
-                            Debug.LogWarning("Value " + key + " is type " + value.GetType() + " which is not allowed.");
-                        }
-                        break;
-                    case EventAllowedType.String:
-                        if (value.GetType() == typeof(string))
-                        {
-                            objects.Add(key, value);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Value " + key + " is type " + value.GetType() + " which is not allowed.");
-                        }
-                        break;
-                    case EventAllowedType.Float:
-                        if (value.GetType() == typeof(float))
-                        {
-                            objects.Add(key, value);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Value " + key + " is type " + value.GetType() + " which is not allowed.");
-                        }
-                        break;
-                    case EventAllowedType.Boolean:
-                        if (value.GetType() == typeof(bool))
-                        {
-                            objects.Add(key, value);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Value " + key + " is type " + value.GetType() + " which is not allowed.");
-                        }
-                        break;
+                    objects.Add(key, value);
                 }
             }
         }
