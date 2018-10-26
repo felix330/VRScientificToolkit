@@ -189,7 +189,6 @@ GameObject:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
-  - component: {fileID: 534669907}
   - component: {fileID: 534669908}
   - component: {fileID: 534669906}
   m_Layer: 0
@@ -272,17 +271,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventBase: {fileID: 11400000, guid: e8ea2e4ed0942264bb528fc2d55758b7, type: 2}
   eventToSend: {fileID: 0}
---- !u!114 &534669907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bef5718cfb27e14195ebe701333d5ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  trackedComponents:
+  - {fileID: 534669905}
+  - {fileID: 534669903}
+  trackedVariableNames:
+    array:
+    - array:
+      - localPosition
+      - childCount
+    - array:
+      - enabled
+  eventVariableNames:
+    array:
+    - array:
+      - localPosition5366
+      - childCount5366
+    - array:
+      - enabled5362
 --- !u!114 &534669908
 MonoBehaviour:
   m_ObjectHideFlags: 0

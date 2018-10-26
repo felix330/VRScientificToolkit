@@ -108,6 +108,7 @@ public class STKTrackEditor : EditorWindow
 
         int numberOfProperties = 0;
         int numberOfFields = 0;
+        List<string> savedNames = new List<string>();
         for (int i = 0; i < trackedObject.GetComponents(typeof(Component)).Length; i++)
         {
             Component c = trackedObject.GetComponents(typeof(Component))[i];
@@ -119,7 +120,8 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }), c.GetType().GetProperties()[j].GetType());
+                        //newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }), STKEventTypeChecker.getIndex(c.GetType().GetProperties()[j].GetType()));
+                        savedNames.Add(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }));
                         numberOfProperties++;
                     }
                 }
@@ -128,7 +130,8 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }), c.GetType().GetFields()[j - c.GetType().GetProperties().Length].GetType());
+                        //newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }), STKEventTypeChecker.getIndex(c.GetType().GetFields()[j - c.GetType().GetProperties().Length].GetType()));
+                        savedNames.Add(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }));
                         numberOfFields++;
                     }
                 }
@@ -138,42 +141,9 @@ public class STKTrackEditor : EditorWindow
         AssetDatabase.CreateAsset(newEvent, "Assets/VRScientificToolkit/Events/Track"+trackedObject.gameObject.name+trackedObject.gameObject.GetInstanceID().ToString()+".asset");
 
         //Create Eventsender
-        PropertyInfo[] trackedProperties = new PropertyInfo[numberOfProperties];
-        FieldInfo[] trackedFields = new FieldInfo[numberOfFields];
-
-        for (int i = 0; i < trackedObject.GetComponents(typeof(Component)).Length; i++)
-        {
-            Component c = trackedObject.GetComponents(typeof(Component))[i];
-
-            
-            //Cycle through variables
-            if (trackedComponents[i] == true)
-            {
-                int propertyIndex = 0;
-                for (int j = 0; j < c.GetType().GetProperties().Length; j++)
-                {
-                    if (trackedVariables[i][j])
-                    {
-                        trackedProperties[propertyIndex] = c.GetType().GetProperties()[j];
-                        propertyIndex++;
-                    }
-                }
-
-                int fieldIndex = 0;
-                for (int j = c.GetType().GetProperties().Length; j < c.GetType().GetFields().Length + c.GetType().GetProperties().Length; j++)
-                {
-                    if (trackedVariables[i][j])
-                    {
-                        trackedFields[fieldIndex] = c.GetType().GetFields()[j - c.GetType().GetProperties().Length];
-                        fieldIndex++;
-                    }
-                }
-            }
-        }
-
         STKEventSender s = trackedObject.AddComponent<STKEventSender>();
         s.eventBase = (STKEvent)AssetDatabase.LoadAssetAtPath("Assets/VRScientificToolkit/Events/Track" + trackedObject.gameObject.name + trackedObject.gameObject.GetInstanceID().ToString() + ".asset",typeof(STKEvent));
-        s.SetTrackedVar(trackedProperties, trackedFields);
+        s.SetTrackedVar(trackedComponents,trackedVariables,savedNames);
     }
 
 }

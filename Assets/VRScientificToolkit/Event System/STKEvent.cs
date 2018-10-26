@@ -29,15 +29,15 @@ public class STKEvent : ScriptableObject
     private int uniqueID;
     private float time;
 
-    public void AddParameter(string name, System.Type type)
+    public void AddParameter(string name, int typeIndex)
     {
         if (parameters == null)
         {
             parameters = new EventParameter[1];
             parameters[0] = new EventParameter();
             parameters[0].name = name;
-            parameters[0].systemType = type;
             parameters[0].hideFromInspector = true;
+            parameters[0].typeIndex = typeIndex;
             return;
         }
 
@@ -51,21 +51,23 @@ public class STKEvent : ScriptableObject
 
         parameters[parameters.Length - 1] = new EventParameter();
         parameters[parameters.Length - 1].name = name;
-        parameters[parameters.Length - 1].systemType = type;
         parameters[parameters.Length - 1].hideFromInspector = true;
+        parameters[parameters.Length - 1].typeIndex = typeIndex;
     }
 
     public void SetValue(string key, object value)
     {
+        
         //Test if Key exists and Value is the correct Datatype
         foreach (EventParameter p in parameters)
         {
-            if (p.systemType == null)
-            {
-                p.SetTypeFromIndex();
-            }
             if (key == p.name)
             {
+                if (p.systemType == null)
+                {
+                    p.SetTypeFromIndex();
+                }
+
                 if (value.GetType() == p.systemType)
                 {
                     objects.Add(key, value);

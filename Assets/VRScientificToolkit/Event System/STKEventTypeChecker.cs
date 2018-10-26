@@ -18,4 +18,17 @@ public static class STKEventTypeChecker {
         }
         return false;
     }
+
+    public static int getIndex(System.Type typeToTest)
+    {
+        Debug.Log(typeToTest);
+        for(int i = 0; i<allowedTypes.Length; i++)
+        {
+            if (typeToTest == allowedTypes[i])
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
 }
