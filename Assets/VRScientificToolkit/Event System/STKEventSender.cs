@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 
-//Arrays of Arrays can't be serialized, so had to create custom class
+//Arrays of Arrays can't be serialized, so had to create custom class to save variable names
 [System.Serializable]
 public class DoubleStringArray
 {
@@ -22,23 +22,29 @@ public class STKEventSender : MonoBehaviour {
     public STKEvent eventToSend;
     public Component[] trackedComponents;
     [SerializeField]
-    public DoubleStringArray trackedVariableNames;
+    public DoubleStringArray trackedVariableNames; //Name to find in component
     [SerializeField]
-    public DoubleStringArray eventVariableNames;
-    
-	// Use this for initialization
-	void Awake () {
-        
-	}
+    public DoubleStringArray eventVariableNames; //Name + identifier in event
+    public bool timedInterval;
+    public int interval = 1;
+    private float timeToSend;
 
     private void Start()
     {
-        
+        timeToSend = interval;
     }
 
     private void Update()
     {
-        
+        if (timedInterval)
+        {
+            timeToSend -= Time.deltaTime;
+            if (timeToSend < 0)
+            {
+                Deploy();
+                timeToSend = interval;
+            }
+        }
     }
 
     [ContextMenu("Deploy")]
@@ -59,9 +65,11 @@ public class STKEventSender : MonoBehaviour {
             }
             
         }
+        eventToSend.time = Time.time;
         STKEventReceiver.ReceiveEvent(eventToSend);
     }
 
+    //Sets references to the tracked variables of this Gameobject
     public void SetTrackedVar(bool[] comps, bool[][] vars, List<string> eventVarNames)
     {
         int numberoftrackedComps = 0;
@@ -116,12 +124,12 @@ public class STKEventSender : MonoBehaviour {
                         {
                             trackedVariableNames.array[trackedCompsIndex].array[varNameIndex] = trackedComponents[trackedCompsIndex].GetType().GetFields()[j - trackedComponents[trackedCompsIndex].GetType().GetProperties().Length].Name;
                             eventVariableNames.array[trackedCompsIndex].array[varNameIndex] = eventVarNames[eventVariableIndex];
-                            //eventBase.AddParameter(eventVarNames[eventVariableIndex],STKEventTypeChecker.getIndex(trackedComponents[trackedCompsIndex].GetType().GetField(trackedVariableNames.array[trackedCompsIndex].array[varNameIndex]).GetValue(trackedComponents[trackedCompsIndex]).GetType()));
+                            eventBase.AddParameter(eventVarNames[eventVariableIndex],STKEventTypeChecker.getIndex(trackedComponents[trackedCompsIndex].GetType().GetField(trackedVariableNames.array[trackedCompsIndex].array[varNameIndex]).GetValue(trackedComponents[trackedCompsIndex]).GetType()));
                         } else
                         {
                             trackedVariableNames.array[trackedCompsIndex].array[varNameIndex] = trackedComponents[trackedCompsIndex].GetType().GetProperties()[j].Name;
                             eventVariableNames.array[trackedCompsIndex].array[varNameIndex] = eventVarNames[eventVariableIndex];
-                            //eventBase.AddParameter(eventVarNames[eventVariableIndex], STKEventTypeChecker.getIndex(trackedComponents[trackedCompsIndex].GetType().GetProperty(trackedVariableNames.array[trackedCompsIndex].array[varNameIndex]).GetValue(trackedComponents[trackedCompsIndex]).GetType()));
+                            eventBase.AddParameter(eventVarNames[eventVariableIndex], STKEventTypeChecker.getIndex(trackedComponents[trackedCompsIndex].GetType().GetProperty(trackedVariableNames.array[trackedCompsIndex].array[varNameIndex]).GetValue(trackedComponents[trackedCompsIndex]).GetType()));
                         }
                         varNameIndex++;
                         eventVariableIndex++;

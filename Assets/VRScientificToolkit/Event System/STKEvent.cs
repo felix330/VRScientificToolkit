@@ -26,8 +26,8 @@ public class STKEvent : ScriptableObject
     public EventParameter[] parameters;
     public string eventName;
     private Hashtable objects = new Hashtable();
-    private int uniqueID;
-    private float time;
+    private int uniqueID; //TODO
+    public float time;
 
     public void AddParameter(string name, int typeIndex)
     {

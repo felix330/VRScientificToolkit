@@ -273,21 +273,27 @@ MonoBehaviour:
   eventToSend: {fileID: 0}
   trackedComponents:
   - {fileID: 534669905}
-  - {fileID: 534669903}
+  - {fileID: 534669904}
   trackedVariableNames:
     array:
     - array:
       - localPosition
-      - childCount
+      - localEulerAngles
+      - forward
     - array:
-      - enabled
+      - farClipPlane
+      - allowDynamicResolution
   eventVariableNames:
     array:
     - array:
       - localPosition5366
-      - childCount5366
+      - localEulerAngles5366
+      - forward5366
     - array:
-      - enabled5362
+      - farClipPlane5364
+      - allowDynamicResolution5364
+  timedInterval: 0
+  interval: 1
 --- !u!114 &534669908
 MonoBehaviour:
   m_ObjectHideFlags: 0
