@@ -25,7 +25,7 @@ public class STKTrackEditor : EditorWindow
         {
             trackedComponents = new bool[trackedObject.GetComponents(typeof(Component)).Length];
             trackedVariables = new bool[trackedObject.GetComponents(typeof(Component)).Length][];
-            lastTrackedObject = trackedObject;
+            //lastTrackedObject = trackedObject;
         }
     }
 
@@ -105,6 +105,7 @@ public class STKTrackEditor : EditorWindow
     {
         //Create Event itself
         STKEvent newEvent = (STKEvent)ScriptableObject.CreateInstance("STKEvent");
+        newEvent.eventName = trackedObject.gameObject.name + trackedObject.gameObject.GetInstanceID().ToString();
 
         int numberOfProperties = 0;
         int numberOfFields = 0;
