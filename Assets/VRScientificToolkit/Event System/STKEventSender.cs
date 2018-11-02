@@ -36,7 +36,7 @@ public class STKEventSender : MonoBehaviour {
 
     private void Update()
     {
-        if (timedInterval)
+        if (timedInterval && STKTestController.GetStarted())
         {
             timeToSend -= Time.deltaTime;
             if (timeToSend < 0)
@@ -50,6 +50,7 @@ public class STKEventSender : MonoBehaviour {
     [ContextMenu("Deploy")]
     void Deploy()
     {
+        Debug.Log("Deploying event");
         eventToSend = Instantiate(eventBase);
         for (int i = 0; i<trackedComponents.Length; i++)
         {
@@ -65,7 +66,7 @@ public class STKEventSender : MonoBehaviour {
             }
             
         }
-        eventToSend.time = Time.time;
+        eventToSend.time = STKTestController.GetTime();
         STKEventReceiver.ReceiveEvent(eventToSend);
     }
 

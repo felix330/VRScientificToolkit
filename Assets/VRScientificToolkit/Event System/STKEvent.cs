@@ -15,7 +15,6 @@ public class EventParameter
     public void SetTypeFromIndex()
     {
         //p.systemType = System.Type.GetType(s);
-        Debug.Log("Set Property");
         systemType = STKEventTypeChecker.allowedTypes[typeIndex];
     }
 }

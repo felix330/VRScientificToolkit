@@ -10,6 +10,11 @@ public class STKTestControllerEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        DrawDefaultInspector();
+        EditorGUILayout.Space();
+        EditorStyles.label.fontStyle = FontStyle.Bold;
+        EditorGUILayout.LabelField("Add a new Property:");
+        EditorStyles.label.fontStyle = FontStyle.Normal;
         STKTestController myTarget = (STKTestController)target;
         newName = EditorGUILayout.TextField("Name of new Property: ",newName);
 

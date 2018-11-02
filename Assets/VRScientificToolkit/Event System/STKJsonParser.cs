@@ -2,15 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class STKJsonParser : MonoBehaviour {
+public static class STKJsonParser {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private static string startString;
+    private static string[] eventStrings;
+    private static string endString;
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static void TestStart(Hashtable p)
+    {
+        int i = 0;
+        startString = "{\"Tests\": \n[{\n";
+        foreach(string s in p.Keys)
+        {
+            startString += "\"" + s + "\": " + p[s].ToString();
+            if ( i<p.Keys.Count-1)
+            {
+                startString += ", \n";
+            }
+            i++;
+        }
+    }
+
+    public static void ReceiveEvents(Hashtable events)
+    {
+
+    }
+
+    public static void TestEnd()
+    {
+
+    }
 }
