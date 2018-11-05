@@ -7,6 +7,7 @@ public static class STKJsonParser {
     private static string startString;
     private static string eventString;
     private static string endString;
+    private static string fullString;
 	
     public static void TestStart(Hashtable p)
     {
@@ -14,7 +15,7 @@ public static class STKJsonParser {
         startString = "{\"Tests\": \n[{\n";
         foreach(string s in p.Keys)
         {
-            startString += "\"" + s + "\": " + p[s].ToString();
+            startString += "\"" + s + "\": " + FormatObject(p[s]);
             if ( i<p.Keys.Count-1)
             {
                 startString += ", \n";
@@ -33,15 +34,28 @@ public static class STKJsonParser {
             Debug.Log(s);
             List<STKEvent> eventList = (List<STKEvent>)events[s];
             Debug.Log(eventList);
-            eventString += eventList[0].eventName + ":\n[\n";
+            eventString += "\"" + eventList[0].eventName + "\":\n[\n";
+            int eventListIndex = 0;
             foreach (STKEvent e in eventList)
             {
                 eventString += "{\n\"uniqueID\": " + e.uniqueID + ",\n";
                 eventString += "\"time\": " + e.time + ",\n";
+                int objectsIndex = 0;
                 foreach (string o in e.objects.Keys)
                 {
-                    eventString += "\"" + o + "\": " + FormatObject(e.objects[o]) + ",\n"; //TODO: Unterschiedung nach Datentyp
+                    eventString += "\"" + o + "\": " + FormatObject(e.objects[o]) + ""; //TODO: Unterschiedung nach Datentyp
+                    if (objectsIndex < e.objects.Keys.Count-1)
+                    {
+                        eventString += ",\n";
+                    }
+                    objectsIndex++;
                 }
+                eventString += "\n}";
+                if (eventListIndex < eventList.Count-1)
+                {
+                    eventString += ",\n";
+                }
+                eventListIndex++;
             }
         }
         Debug.Log(eventString);
@@ -60,7 +74,8 @@ public static class STKJsonParser {
         }
         else if (o.GetType() == typeof(bool))
         {
-            return o.ToString();
+            string returnString = "\"" + o.ToString() + "\"";
+            return returnString;
         }
         else if (o.GetType() == typeof(Vector2))
         {
@@ -85,6 +100,8 @@ public static class STKJsonParser {
 
     public static void TestEnd()
     {
-
+        endString = "]}\n]}";
+        fullString = startString + eventString + endString;
+        Debug.Log(fullString);
     }
 }

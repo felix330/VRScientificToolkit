@@ -47,7 +47,6 @@ public class STKEvent : ScriptableObject
         {
             if (key == p.name)
             {
-                Debug.Log("Key found");
                 if (p.systemType == null)
                 {
                     p.SetTypeFromIndex();
@@ -56,7 +55,6 @@ public class STKEvent : ScriptableObject
                 if (value.GetType() == p.systemType)
                 {
                     objects.Add(key, value);
-                    Debug.Log("Add object");
                 }
             }
         }
