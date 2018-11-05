@@ -2,6 +2,8 @@
 using UnityEditor;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 
 
 [System.Serializable]
@@ -14,7 +16,6 @@ public class EventParameter
 
     public void SetTypeFromIndex()
     {
-        //p.systemType = System.Type.GetType(s);
         systemType = STKEventTypeChecker.allowedTypes[typeIndex];
     }
 }
@@ -22,46 +23,31 @@ public class EventParameter
 [CreateAssetMenu(menuName = "VR Scientific Toolkit/STKEvent")]
 public class STKEvent : ScriptableObject
 {
-    public EventParameter[] parameters;
+    //public EventParameter[] parameters = new EventParameter[1];
+    [SerializeField]
+    public List<EventParameter> parameters = new List<EventParameter>();
     public string eventName;
-    private Hashtable objects = new Hashtable();
-    private int uniqueID; //TODO
+    public Hashtable objects = new Hashtable();
+    public int uniqueID; //TODO
     public float time;
 
     public void AddParameter(string name, int typeIndex)
     {
-        if (parameters == null)
-        {
-            parameters = new EventParameter[1];
-            parameters[0] = new EventParameter();
-            parameters[0].name = name;
-            parameters[0].hideFromInspector = true;
-            parameters[0].typeIndex = typeIndex;
-            return;
-        }
-
-        EventParameter[] oldParameters = parameters;
-        parameters = new EventParameter[oldParameters.Length + 1];
-
-        for (int i = 0; i < oldParameters.Length; i++)
-        {
-            parameters[i] = oldParameters[i];
-        }
-
-        parameters[parameters.Length - 1] = new EventParameter();
-        parameters[parameters.Length - 1].name = name;
-        parameters[parameters.Length - 1].hideFromInspector = true;
-        parameters[parameters.Length - 1].typeIndex = typeIndex;
+        EventParameter newParameter = new EventParameter();
+        newParameter.name = name;
+        newParameter.hideFromInspector = true;
+        newParameter.typeIndex = typeIndex;
+        parameters.Add(newParameter);
     }
 
     public void SetValue(string key, object value)
     {
-        
         //Test if Key exists and Value is the correct Datatype
         foreach (EventParameter p in parameters)
         {
             if (key == p.name)
             {
+                Debug.Log("Key found");
                 if (p.systemType == null)
                 {
                     p.SetTypeFromIndex();
@@ -70,6 +56,7 @@ public class STKEvent : ScriptableObject
                 if (value.GetType() == p.systemType)
                 {
                     objects.Add(key, value);
+                    Debug.Log("Add object");
                 }
             }
         }

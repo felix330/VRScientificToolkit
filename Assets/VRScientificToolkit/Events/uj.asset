@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: uj
   m_EditorClassIdentifier: 
   parameters:
-  - name: 
+  - name: weffew
     typeIndex: 2
     hideFromInspector: 0
-  - name: 
+  - name: rewre
     typeIndex: 0
     hideFromInspector: 0
   eventName: 
+  uniqueID: 0
+  time: 0

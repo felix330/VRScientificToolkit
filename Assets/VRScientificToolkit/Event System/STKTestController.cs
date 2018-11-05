@@ -68,8 +68,9 @@ public class STKTestController : MonoBehaviour {
                 g.SetActive(false);
             }
             time = 0;
-            started = false;
+            STKEventReceiver.SendEvents();
             STKJsonParser.TestEnd();
+            started = false;
         }
         
     }

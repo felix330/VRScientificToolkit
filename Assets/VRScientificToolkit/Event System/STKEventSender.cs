@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using UnityEditor;
 
 //Arrays of Arrays can't be serialized, so had to create custom class to save variable names
 [System.Serializable]

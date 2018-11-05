@@ -139,12 +139,14 @@ public class STKTrackEditor : EditorWindow
             }
         }
 
-        AssetDatabase.CreateAsset(newEvent, "Assets/VRScientificToolkit/Events/Track"+trackedObject.gameObject.name+trackedObject.gameObject.GetInstanceID().ToString()+".asset");
-
-        //Create Eventsender
         STKEventSender s = trackedObject.AddComponent<STKEventSender>();
-        s.eventBase = (STKEvent)AssetDatabase.LoadAssetAtPath("Assets/VRScientificToolkit/Events/Track" + trackedObject.gameObject.name + trackedObject.gameObject.GetInstanceID().ToString() + ".asset",typeof(STKEvent));
-        s.SetTrackedVar(trackedComponents,trackedVariables,savedNames);
+        s.eventBase = newEvent;
+        s.SetTrackedVar(trackedComponents, trackedVariables, savedNames);
+        AssetDatabase.CreateAsset(newEvent, "Assets/VRScientificToolkit/Events/Track"+trackedObject.gameObject.name+trackedObject.gameObject.GetInstanceID().ToString()+".asset");
+        Undo.RecordObject(newEvent, "Created Event");
+        AssetDatabase.Refresh();
+        s.eventBase = (STKEvent)AssetDatabase.LoadAssetAtPath("Assets/VRScientificToolkit/Events/Track" + trackedObject.gameObject.name + trackedObject.gameObject.GetInstanceID().ToString() + ".asset", typeof(STKEvent));
+        AssetDatabase.SaveAssets();
     }
 
 }

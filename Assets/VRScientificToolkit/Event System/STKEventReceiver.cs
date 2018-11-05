@@ -24,6 +24,6 @@ public static class STKEventReceiver {
 
     public static void SendEvents()
     {
-
+        STKJsonParser.ReceiveEvents(savedEvents);
     }
 }
