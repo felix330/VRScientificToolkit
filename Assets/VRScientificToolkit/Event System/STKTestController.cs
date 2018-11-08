@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class STKTestController : MonoBehaviour {
 
@@ -12,76 +13,49 @@ public class STKTestController : MonoBehaviour {
     public GameObject[] startActivateObjects;
 
     [SerializeField]
+    public GameObject[] testStages;
+    public GameObject stagePrefab;
+
+    [SerializeField]
     private List<STKTestControllerProperty> properties = new List<STKTestControllerProperty>();
     private Hashtable values = new Hashtable();
     private static bool started;
     private static float time;
+    private int currentStage = 0;
+
+    private bool hasTimeLimit;
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Awake () {
+        testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
+        testStages[0].SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (started)
         {
             time += Time.deltaTime;
         }
 	}
 
-    public void AddProperty(string name)
+    public void AddStage()
     {
-        Debug.Log("add property");
-        GameObject newProperty = GameObject.Instantiate(propertyPrefab);
-        newProperty.transform.parent = verticalGroup.transform;
-        newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
-        properties.Add(newProperty.GetComponent<STKTestControllerProperty>());
-        startButton.transform.parent = transform;
-        startButton.transform.parent = verticalGroup.transform; //Reset button to last position
+        GameObject newStage = Instantiate(stagePrefab);
+        newStage.transform.parent = verticalGroup.transform;
+        stagePrefab.GetComponent<STKTestStage>().myController = gameObject.GetComponent<STKTestController>();
+        testStages = Array.ConvertAll(STKArrayTools.AddElement(newStage,testStages), item => item as GameObject);
+        testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
     }
 
-    public void ToggleTest(GameObject button)
+    public void StageEnded()
     {
-        if (!started)
+        testStages[currentStage].SetActive(false);
+        if ((currentStage+1) != testStages.Length && testStages[(currentStage+1)] != null)
         {
-            button.GetComponent<Button>().GetComponentInChildren<Text>().text = "Stop Test";
-            foreach (GameObject g in startActivateObjects)
-            {
-                g.SetActive(true);
-            }
-
-            foreach (STKTestControllerProperty p in properties)
-            {
-                Debug.Log(p.text.text);
-                Debug.Log(p.GetValue());
-                values.Add(p.text.text, p.GetValue());
-                Debug.Log("Add Value");
-            }
-            STKJsonParser.TestStart(values);
-            started = true;
-        } else
-        {
-            button.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Test";
-            foreach (GameObject g in startActivateObjects)
-            {
-                g.SetActive(false);
-            }
-            time = 0;
-            STKEventReceiver.SendEvents();
-            STKJsonParser.TestEnd();
-            started = false;
+            currentStage++;
+            testStages[currentStage].SetActive(true);
         }
-        
     }
-
-    public static float GetTime()
-    {
-        return time;
-    }
-
-    public static bool GetStarted()
-    {
-        return started;
-    }
+    
 }

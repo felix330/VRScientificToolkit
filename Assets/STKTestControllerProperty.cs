@@ -22,4 +22,11 @@ public class STKTestControllerProperty : MonoBehaviour {
     {
         return value;
     }
+
+    public void Clear()
+    {
+        value = null;
+        inputField.text = null;
+    }
+    
 }
