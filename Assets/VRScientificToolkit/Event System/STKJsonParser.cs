@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//{\"Tests\": \n[
+//]}
 
 public static class STKJsonParser {
 
     private static string startString;
     private static string eventString;
     private static string endString;
-    private static string fullString;
+    private static string[] stageString;
+    private static int currentStage = 0;
+
 	
     public static void TestStart(Hashtable p)
     {
+        if (stageString == null)
+        {
+            stageString = new string[STKTestController.numberOfStages];
+        }
         int i = 0;
-        startString = "{\"Tests\": \n[{\n";
+        startString = "{\n";
         foreach(string s in p.Keys)
         {
             startString += "\"" + s + "\": " + FormatObject(p[s]);
@@ -100,8 +108,29 @@ public static class STKJsonParser {
 
     public static void TestEnd()
     {
-        endString = "]}\n]}";
-        fullString = startString + eventString + endString;
+        endString = "]}\n";
+        stageString[currentStage] = startString + eventString + endString;
+        currentStage++;
+        if (currentStage >= stageString.Length)
+        {
+            Debug.Log("Creating final");
+            CreateFile();
+        }
+    }
+
+    public static string CreateFile()
+    {
+        string fullString = "{\"Tests\": \n[";
+        for (int i = 0; i < stageString.Length; i++)
+        {
+            fullString += stageString[i];
+            if (i < stageString.Length-1)
+            {
+                fullString += ",\n";
+            }
+        }
+        fullString += "]}";
         Debug.Log(fullString);
+        return fullString;
     }
 }

@@ -14,12 +14,12 @@ public class STKTestController : MonoBehaviour {
 
     [SerializeField]
     public GameObject[] testStages;
+    public static int numberOfStages;
     public GameObject stagePrefab;
 
     [SerializeField]
     private List<STKTestControllerProperty> properties = new List<STKTestControllerProperty>();
     private Hashtable values = new Hashtable();
-    private static bool started;
     private static float time;
     private int currentStage = 0;
 
@@ -28,15 +28,12 @@ public class STKTestController : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
+        numberOfStages = testStages.Length;
         testStages[0].SetActive(true);
     }
 
     // Update is called once per frame
     void Update () {
-		if (started)
-        {
-            time += Time.deltaTime;
-        }
 	}
 
     public void AddStage()

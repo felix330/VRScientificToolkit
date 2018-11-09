@@ -26,4 +26,9 @@ public static class STKEventReceiver {
     {
         STKJsonParser.ReceiveEvents(savedEvents);
     }
+
+    public static void ClearEvents()
+    {
+        savedEvents = new Hashtable();
+    }
 }

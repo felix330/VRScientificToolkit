@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System;
 
 public class STKTestStage : MonoBehaviour{
-    [HideInInspector]
     public STKTestControllerProperty[] properties;
     public List<GameObject> GameobjectsToActivate = new List<GameObject>();
     public List<GameObject> GameobjectsToDeActivate = new List<GameObject>();
@@ -34,17 +33,22 @@ public class STKTestStage : MonoBehaviour{
         if (started)
         {
             time += Time.deltaTime;
+
+            if (hasTimeLimit && time >= timeLimit)
+            {
+                ToggleTest(startButton);
+            }
         }
     }
 
     public void AddProperty(string name)
     {
         GameObject newProperty = GameObject.Instantiate(myController.propertyPrefab);
-        newProperty.transform.parent = transform;
+        newProperty.transform.SetParent(transform);
         newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
-        properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty,properties), item => item as STKTestControllerProperty);
-        startButton.transform.parent = transform.parent;
-        startButton.transform.parent = transform; //Reset button to last position
+        properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(),properties), item => item as STKTestControllerProperty);
+        startButton.transform.SetParent(transform.parent);
+        startButton.transform.SetParent(transform); //Reset button to last position
     }
 
     public void ToggleTest(GameObject button)
@@ -64,7 +68,7 @@ public class STKTestStage : MonoBehaviour{
                 values.Add(p.text.text, p.GetValue());
                 p.gameObject.SetActive(false);
             }
-            //STKJsonParser.TestStart(values);
+            STKJsonParser.TestStart(values);
             started = true;
         }
         else
@@ -80,7 +84,9 @@ public class STKTestStage : MonoBehaviour{
                 g.SetActive(false);
             }
             time = 0;
-            //STKEventReceiver.SendEvents();
+            STKEventReceiver.SendEvents();
+            STKEventReceiver.ClearEvents();
+            STKJsonParser.TestEnd();
             started = false;
             myController.StageEnded();
         }
