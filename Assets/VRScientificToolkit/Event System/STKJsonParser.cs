@@ -36,9 +36,10 @@ public static class STKJsonParser {
     public static void ReceiveEvents(Hashtable events)
     {
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-        eventString = ",\n";
+        eventString = "";
         foreach (string s in events.Keys)
         {
+            eventString += ",\n";
             Debug.Log(s);
             List<STKEvent> eventList = (List<STKEvent>)events[s];
             eventString += "\"" + eventList[0].eventName + "\":\n[\n";
@@ -64,6 +65,7 @@ public static class STKJsonParser {
                 }
                 eventListIndex++;
             }
+            eventString += "]\n";
         }
     }
 
@@ -106,7 +108,7 @@ public static class STKJsonParser {
 
     public static void TestEnd()
     {
-        endString = "]}\n";
+        endString = "}\n";
         stageString[currentStage] = startString + eventString + endString;
         currentStage++;
         if (currentStage >= stageString.Length)
