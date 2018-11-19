@@ -40,7 +40,7 @@ public class STKTestController : MonoBehaviour {
     {
         GameObject newStage = Instantiate(stagePrefab);
         newStage.transform.parent = verticalGroup.transform;
-        stagePrefab.GetComponent<STKTestStage>().myController = gameObject.GetComponent<STKTestController>();
+        newStage.GetComponent<STKTestStage>().myController = gameObject.GetComponent<STKTestController>();
         testStages = Array.ConvertAll(STKArrayTools.AddElement(newStage,testStages), item => item as GameObject);
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
     }
