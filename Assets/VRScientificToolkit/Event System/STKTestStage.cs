@@ -14,6 +14,7 @@ public class STKTestStage : MonoBehaviour{
     public int timeLimit;
     public STKTestController myController;
     public GameObject startButton;
+    public GameObject timeText;
     private static bool started;
     private Hashtable values = new Hashtable();
     private static float time;
@@ -33,7 +34,7 @@ public class STKTestStage : MonoBehaviour{
         if (started)
         {
             time += Time.deltaTime;
-
+            timeText.GetComponent<Text>().text = Mathf.Round(time).ToString();
             if (hasTimeLimit && time >= timeLimit)
             {
                 ToggleTest(startButton);
@@ -68,6 +69,10 @@ public class STKTestStage : MonoBehaviour{
                 values.Add(p.text.text, p.GetValue());
                 p.gameObject.SetActive(false);
             }
+            if (hasTimeLimit)
+            {
+                timeText.transform.parent.gameObject.SetActive(true);
+            }
             STKJsonParser.TestStart(values);
             started = true;
         }
@@ -84,6 +89,7 @@ public class STKTestStage : MonoBehaviour{
                 g.SetActive(false);
             }
             time = 0;
+            timeText.transform.parent.gameObject.SetActive(false);
             STKEventReceiver.SendEvents();
             STKEventReceiver.ClearEvents();
             STKJsonParser.TestEnd();

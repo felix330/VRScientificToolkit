@@ -11,26 +11,29 @@ public class STKTestStageEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        STKTestStage myTarget = (STKTestStage)target;
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-        
-        EditorGUILayout.LabelField("Add a new Property:");
-        newName = EditorGUILayout.TextField("Name of new Property: ", newName);
-
-        if (newName != null && newName != "")
+        if (!EditorApplication.isPlaying)
         {
-            if (GUILayout.Button("Add Property"))
+            STKTestStage myTarget = (STKTestStage)target;
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+
+            EditorGUILayout.LabelField("Add a new Property:");
+            newName = EditorGUILayout.TextField("Name of new Property: ", newName);
+
+            if (newName != null && newName != "")
             {
-                myTarget.AddProperty(newName);
+                if (GUILayout.Button("Add Property"))
+                {
+                    myTarget.AddProperty(newName);
+                }
             }
-        }
-        else
-        {
-            GUILayout.Label("Please choose a name before adding a new property.");
-        }
-        EditorGUILayout.Space();
+            else
+            {
+                GUILayout.Label("Please choose a name before adding a new property.");
+            }
+            EditorGUILayout.Space();
 
-        base.OnInspectorGUI();
+            base.OnInspectorGUI();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 //{\"Tests\": \n[
 //]}
 
@@ -30,7 +31,6 @@ public static class STKJsonParser {
             }
             i++;
         }
-        Debug.Log(startString);
     }
 
     public static void ReceiveEvents(Hashtable events)
@@ -41,7 +41,6 @@ public static class STKJsonParser {
         {
             Debug.Log(s);
             List<STKEvent> eventList = (List<STKEvent>)events[s];
-            Debug.Log(eventList);
             eventString += "\"" + eventList[0].eventName + "\":\n[\n";
             int eventListIndex = 0;
             foreach (STKEvent e in eventList)
@@ -66,7 +65,6 @@ public static class STKJsonParser {
                 eventListIndex++;
             }
         }
-        Debug.Log(eventString);
     }
 
     private static string FormatObject(System.Object o)
@@ -130,7 +128,11 @@ public static class STKJsonParser {
             }
         }
         fullString += "]}";
-        Debug.Log(fullString);
+        string path = (Application.persistentDataPath + "\\" + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".txt");
+        using (StreamWriter sw = File.AppendText(path))
+        {
+            sw.Write(fullString);
+        }
         return fullString;
     }
 }
