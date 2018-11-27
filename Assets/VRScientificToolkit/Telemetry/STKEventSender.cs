@@ -33,6 +33,7 @@ public class STKEventSender : MonoBehaviour {
     private void Start()
     {
         timeToSend = interval;
+        eventToSend = Instantiate(eventBase);
     }
 
     private void Update()
@@ -48,26 +49,36 @@ public class STKEventSender : MonoBehaviour {
         }
     }
 
-    [ContextMenu("Deploy")]
-    void Deploy()
+    public void SetEventValue(string name, object o)
     {
-        eventToSend = Instantiate(eventBase);
-        for (int i = 0; i<trackedComponents.Length; i++)
+        eventToSend.SetValue(name, o);
+    }
+
+    [ContextMenu("Deploy")]
+    public void Deploy()
+    {
+        if (trackedComponents != null) //Get Values if this is a tracker
         {
-            for (int j = 0; j<trackedVariableNames.array[i].array.Length; j++)
+            for (int i = 0; i < trackedComponents.Length; i++)
             {
-                if (trackedComponents[i].GetType().GetProperty(trackedVariableNames.array[i].array[j]) != null)
+                for (int j = 0; j < trackedVariableNames.array[i].array.Length; j++)
                 {
-                    eventToSend.SetValue(eventVariableNames.array[i].array[j], trackedComponents[i].GetType().GetProperty(trackedVariableNames.array[i].array[j]).GetValue(trackedComponents[i]));
-                } else if (trackedComponents[i].GetType().GetField(trackedVariableNames.array[i].array[j]) != null)
-                {
-                    eventToSend.SetValue(eventVariableNames.array[i].array[j], trackedComponents[i].GetType().GetField(trackedVariableNames.array[i].array[j]).GetValue(trackedComponents[i]));
+                    if (trackedComponents[i].GetType().GetProperty(trackedVariableNames.array[i].array[j]) != null)
+                    {
+                        eventToSend.SetValue(eventVariableNames.array[i].array[j], trackedComponents[i].GetType().GetProperty(trackedVariableNames.array[i].array[j]).GetValue(trackedComponents[i]));
+                    }
+                    else if (trackedComponents[i].GetType().GetField(trackedVariableNames.array[i].array[j]) != null)
+                    {
+                        eventToSend.SetValue(eventVariableNames.array[i].array[j], trackedComponents[i].GetType().GetField(trackedVariableNames.array[i].array[j]).GetValue(trackedComponents[i]));
+                    }
                 }
+
             }
-            
         }
+        
         eventToSend.time = STKTestStage.GetTime();
         STKEventReceiver.ReceiveEvent(eventToSend);
+        eventToSend = Instantiate(eventBase);
     }
 
     //Sets references to the tracked variables of this Gameobject

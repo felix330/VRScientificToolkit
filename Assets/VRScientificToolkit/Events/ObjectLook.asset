@@ -9,13 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ddec862d19d4674b90cbebf15eafc4c, type: 3}
-  m_Name: New STK Event 2
+  m_Name: ObjectLook
   m_EditorClassIdentifier: 
   parameters:
-  - name: sd
-    typeIndex: 0
+  - name: ObjectName
+    typeIndex: 2
     hideFromInspector: 0
-  - name: 
-    typeIndex: 0
+  - name: Duration
+    typeIndex: 1
     hideFromInspector: 0
-  eventName: 
+  eventName: ObjectLook
+  uniqueID: 0
+  time: 0
