@@ -15,6 +15,8 @@ public class STKTestStage : MonoBehaviour{
     public STKTestController myController;
     public GameObject startButton;
     public GameObject timeText;
+    public GameObject propertyParent;
+    public GameObject buttonParent;
     private static bool started;
     private Hashtable values = new Hashtable();
     private static float time;
@@ -45,11 +47,11 @@ public class STKTestStage : MonoBehaviour{
     public void AddProperty(string name)
     {
         GameObject newProperty = GameObject.Instantiate(myController.propertyPrefab);
-        newProperty.transform.SetParent(transform);
+        newProperty.transform.SetParent(propertyParent.transform);
         newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
         properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(),properties), item => item as STKTestControllerProperty);
         startButton.transform.SetParent(transform.parent);
-        startButton.transform.SetParent(transform); //Reset button to last position
+        startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
     }
 
     public void ToggleTest(GameObject button)
