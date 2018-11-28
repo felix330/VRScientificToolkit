@@ -54,6 +54,13 @@ public class STKTestStage : MonoBehaviour{
         startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
     }
 
+    public void AddButton(string name)
+    {
+        GameObject newButton = GameObject.Instantiate(myController.buttonPrefab);
+        newButton.transform.SetParent(buttonParent.transform);
+        newButton.GetComponent<Button>().GetComponentInChildren<Text>().text = name;
+    }
+
     public void ToggleTest(GameObject button)
     {
         if (!started)

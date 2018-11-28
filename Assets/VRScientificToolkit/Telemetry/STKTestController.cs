@@ -8,7 +8,8 @@ public class STKTestController : MonoBehaviour {
 
     public GameObject verticalGroup; //Parent object for spawned selections
     public GameObject propertyPrefab;
-    public GameObject startButton;
+    public GameObject buttonPrefab;
+    //public GameObject startButton;
 
     public GameObject[] startActivateObjects;
 
@@ -24,8 +25,7 @@ public class STKTestController : MonoBehaviour {
     private int currentStage = 0;
 
     private bool hasTimeLimit;
-
-    // Use this for initialization
+    
     void Awake () {
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
         numberOfStages = testStages.Length;
