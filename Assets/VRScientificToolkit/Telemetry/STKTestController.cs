@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class STKTestController : MonoBehaviour {
 
@@ -53,6 +54,9 @@ public class STKTestController : MonoBehaviour {
         {
             currentStage++;
             testStages[currentStage].SetActive(true);
+        } else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     
