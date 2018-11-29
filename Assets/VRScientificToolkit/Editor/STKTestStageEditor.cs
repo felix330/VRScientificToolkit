@@ -22,9 +22,13 @@ public class STKTestStageEditor : Editor {
 
             if (propertyName != null && propertyName != "")
             {
-                if (GUILayout.Button("Add Property"))
+                if (GUILayout.Button("Add Input Property"))
                 {
-                    myTarget.AddProperty(propertyName);
+                    myTarget.AddInputProperty(propertyName);
+                }
+                if (GUILayout.Button("Add Toggle Property"))
+                {
+                    myTarget.AddToggleProperty(propertyName);
                 }
             }
             else

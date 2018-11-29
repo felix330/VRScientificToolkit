@@ -44,12 +44,22 @@ public class STKTestStage : MonoBehaviour{
         }
     }
 
-    public void AddProperty(string name)
+    public void AddInputProperty(string name)
     {
-        GameObject newProperty = GameObject.Instantiate(myController.propertyPrefab);
+        GameObject newProperty = GameObject.Instantiate(myController.inputPropertyPrefab);
         newProperty.transform.SetParent(propertyParent.transform);
         newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
         properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(),properties), item => item as STKTestControllerProperty);
+        startButton.transform.SetParent(transform.parent);
+        startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
+    }
+
+    public void AddToggleProperty(string name)
+    {
+        GameObject newProperty = GameObject.Instantiate(myController.togglePropertyPrefab);
+        newProperty.transform.SetParent(propertyParent.transform);
+        newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
+        properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), properties), item => item as STKTestControllerProperty);
         startButton.transform.SetParent(transform.parent);
         startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
     }

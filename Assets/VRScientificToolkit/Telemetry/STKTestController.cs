@@ -7,7 +7,8 @@ using System;
 public class STKTestController : MonoBehaviour {
 
     public GameObject verticalGroup; //Parent object for spawned selections
-    public GameObject propertyPrefab;
+    public GameObject inputPropertyPrefab;
+    public GameObject togglePropertyPrefab;
     public GameObject buttonPrefab;
     //public GameObject startButton;
 

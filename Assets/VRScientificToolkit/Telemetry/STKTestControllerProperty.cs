@@ -7,6 +7,7 @@ public class STKTestControllerProperty : MonoBehaviour {
 
     public Text text;
     public InputField inputField;
+    public Toggle toggle;
     private string value;
 	// Use this for initialization
 	void Start () {
@@ -15,7 +16,13 @@ public class STKTestControllerProperty : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        value = inputField.text;
+        if (inputField != null)
+        {
+            value = inputField.text;
+        } else if (toggle != null)
+        {
+            value = toggle.isOn.ToString();
+        }
 	}
 
     public string GetValue()
@@ -26,7 +33,10 @@ public class STKTestControllerProperty : MonoBehaviour {
     public void Clear()
     {
         value = null;
-        inputField.text = null;
+        if (inputField != null)
+        {
+            inputField.text = null;
+        }
     }
     
 }
