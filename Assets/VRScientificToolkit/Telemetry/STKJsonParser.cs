@@ -106,6 +106,12 @@ public static class STKJsonParser {
                 string returnString = "[" + v.w + "," + v.x + "," + v.y + "," + v.z + "]";
                 return returnString;
             }
+            else if (o.GetType() == typeof(Quaternion))
+            {
+                Quaternion v = (Quaternion)o;
+                string returnString = "[" + v.w + "," + v.x + "," + v.y + "," + v.z + "]";
+                return returnString;
+            }
         }
         Debug.LogWarning("Formatting Object unsuccessful. Returning empty.");
         return "";

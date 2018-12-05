@@ -11,15 +11,16 @@ public class STKTestControllerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        //DrawDefaultInspector();
-
-        STKTestController myTarget = (STKTestController)target;
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-
-        if (GUILayout.Button(new GUIContent("Add Stage", "Add a stage to your experiment. Different stages can have different attributes.")))
+        if (!EditorApplication.isPlaying)
         {
-            myTarget.AddStage();
+            STKTestController myTarget = (STKTestController)target;
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+
+            if (GUILayout.Button(new GUIContent("Add Stage", "Add a stage to your experiment. Different stages can have different attributes.")))
+            {
+                myTarget.AddStage();
+            }
         }
-        
+
     }
 }
