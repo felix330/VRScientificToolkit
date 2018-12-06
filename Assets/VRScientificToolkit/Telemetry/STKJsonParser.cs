@@ -13,7 +13,9 @@ public static class STKJsonParser {
     private static string[] stageString;
     private static int currentStage = 0;
 
-	
+    private static STKSettings settings = Resources.Load<STKSettings>("STKSettings");
+
+
     public static void TestStart(Hashtable p)
     {
         if (stageString == null)
@@ -141,7 +143,7 @@ public static class STKJsonParser {
             }
         }
         fullString += "]}";
-        string path = (Application.persistentDataPath + "\\" + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".txt");
+        string path = (settings.jsonPath + "\\" + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".txt");
         using (StreamWriter sw = File.AppendText(path))
         {
             sw.Write(fullString);
