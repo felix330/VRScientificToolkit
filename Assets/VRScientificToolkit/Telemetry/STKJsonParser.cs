@@ -122,7 +122,7 @@ public static class STKJsonParser {
     public static void TestEnd()
     {
         endString = "}\n";
-        stageString[currentStage] = startString + eventString + endString;
+        stageString[currentStage] = "\"Stage" + currentStage.ToString() + "\":" + startString + eventString + endString;
         currentStage++;
         if (currentStage >= stageString.Length)
         {
@@ -133,7 +133,7 @@ public static class STKJsonParser {
 
     public static string CreateFile()
     {
-        string fullString = "{\"Tests\": \n[";
+        string fullString = "{\n";
         for (int i = 0; i < stageString.Length; i++)
         {
             fullString += stageString[i];
@@ -142,8 +142,8 @@ public static class STKJsonParser {
                 fullString += ",\n";
             }
         }
-        fullString += "]}";
-        string path = (settings.jsonPath + "\\" + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".txt");
+        fullString += "}";
+        string path = (settings.jsonPath + "\\" + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "_" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".json");
         using (StreamWriter sw = File.AppendText(path))
         {
             sw.Write(fullString);
