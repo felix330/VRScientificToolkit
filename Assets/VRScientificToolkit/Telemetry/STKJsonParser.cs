@@ -24,7 +24,10 @@ public static class STKJsonParser {
         }
         int i = 0;
         startString = "{\n";
-        foreach(string s in p.Keys)
+        startString += "\"TimeStarted\": \"" + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + ":" + System.DateTime.Now.Second + "\", \n";
+        startString += "\"DateStarted\": \"" + System.DateTime.Now.Year + "." + System.DateTime.Now.Month + "." + System.DateTime.Now.Day + "\"";
+        if (p.Count > 0) startString += "\n,";
+        foreach (string s in p.Keys)
         {
             startString += "\"" + s + "\": " + FormatObject(p[s]);
             if ( i<p.Keys.Count-1)
