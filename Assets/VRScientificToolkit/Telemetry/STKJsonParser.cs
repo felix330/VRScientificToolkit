@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-//{\"Tests\": \n[
-//]}
 
 public static class STKJsonParser {
 
@@ -23,6 +21,7 @@ public static class STKJsonParser {
             stageString = new string[STKTestController.numberOfStages];
         }
         int i = 0;
+        eventString = "";
         startString = "{\n";
         startString += "\"TimeStarted\": \"" + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + ":" + System.DateTime.Now.Second + "\", \n";
         startString += "\"DateStarted\": \"" + System.DateTime.Now.Year + "." + System.DateTime.Now.Month + "." + System.DateTime.Now.Day + "\"";
@@ -41,37 +40,37 @@ public static class STKJsonParser {
     public static void ReceiveEvents(Hashtable events)
     {
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-        eventString = "";
+        System.Text.StringBuilder sb = new System.Text.StringBuilder("");
         foreach (string s in events.Keys)
         {
-            eventString += ",\n";
-            Debug.Log(s);
+            sb.Append(",\n");
             List<STKEvent> eventList = (List<STKEvent>)events[s];
-            eventString += "\"" + eventList[0].eventName + "\":\n[\n";
+            sb.Append("\"").Append(eventList[0].eventName).Append("\":\n[\n");
             int eventListIndex = 0;
             foreach (STKEvent e in eventList)
             {
-                eventString += "{\n\"uniqueID\": " + e.uniqueID + ",\n";
-                eventString += "\"time\": " + e.time + ",\n";
+                sb.Append("{\n\"uniqueID\": ").Append(e.uniqueID).Append(",\n");
+                sb.Append("\"time\": ").Append(e.time).Append(",\n");
                 int objectsIndex = 0;
                 foreach (string o in e.objects.Keys)
                 {
-                    eventString += "\"" + o + "\": " + FormatObject(e.objects[o]) + ""; //TODO: Unterschiedung nach Datentyp
+                    sb.Append("\"").Append(o).Append("\": ").Append(FormatObject(e.objects[o])).Append(""); //TODO: Unterschiedung nach Datentyp
                     if (objectsIndex < e.objects.Keys.Count-1)
                     {
-                        eventString += ",\n";
+                        sb.Append(",\n");
                     }
                     objectsIndex++;
                 }
-                eventString += "\n}";
+                sb.Append("\n}");
                 if (eventListIndex < eventList.Count-1)
                 {
-                    eventString += ",\n";
+                    sb.Append(",\n");
                 }
                 eventListIndex++;
             }
-            eventString += "]\n";
+            sb.Append("]\n");
         }
+        eventString = sb.ToString();
     }
 
     private static string FormatObject(System.Object o)

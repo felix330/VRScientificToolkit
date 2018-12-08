@@ -27,7 +27,7 @@ public class STKEventSender : MonoBehaviour {
     [SerializeField]
     public DoubleStringArray eventVariableNames; //Name + identifier in event
     public bool timedInterval;
-    public int interval = 1;
+    public float interval = 1;
     private float timeToSend;
 
     private void Start()

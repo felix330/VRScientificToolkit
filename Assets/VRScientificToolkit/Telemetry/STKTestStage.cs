@@ -102,6 +102,7 @@ public class STKTestStage : MonoBehaviour{
                 p.gameObject.SetActive(true);
                 p.Clear();
             }
+            Debug.Log("Point 1");
             button.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Stage";
             foreach (GameObject g in GameobjectsToActivate)
             {
@@ -109,7 +110,9 @@ public class STKTestStage : MonoBehaviour{
             }
             time = 0;
             timeText.transform.parent.gameObject.SetActive(false);
+            Debug.Log("Point 2");
             STKEventReceiver.SendEvents();
+            Debug.Log("Point 3");
             STKEventReceiver.ClearEvents();
             STKJsonParser.TestEnd();
             started = false;
