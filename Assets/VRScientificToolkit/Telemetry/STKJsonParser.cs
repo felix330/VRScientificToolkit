@@ -77,11 +77,11 @@ public static class STKJsonParser {
     {
         if (o != null)
         {
-
+            System.Text.StringBuilder sb = new System.Text.StringBuilder("");
             if (o.GetType() == typeof(string))
             {
-                string returnString = "\"" + o + "\"";
-                return returnString;
+                sb.Append("\"").Append(o).Append("\"");
+                return sb.ToString();
             }
             else if (o.GetType() == typeof(int) || o.GetType() == typeof(float) || o.GetType() == typeof(double))
             {
@@ -89,32 +89,32 @@ public static class STKJsonParser {
             }
             else if (o.GetType() == typeof(bool))
             {
-                string returnString = "\"" + o.ToString() + "\"";
-                return returnString;
+                sb.Append("\"").Append(o.ToString()).Append("\"");
+                return sb.ToString();
             }
             else if (o.GetType() == typeof(Vector2))
             {
                 Vector2 v = (Vector2)o;
-                string returnString = "[" + v.x + "," + v.y + "]";
-                return returnString;
+                sb.Append("[").Append(v.x).Append(",").Append(v.y).Append("]");
+                return sb.ToString();
             }
             else if (o.GetType() == typeof(Vector3))
             {
                 Vector3 v = (Vector3)o;
-                string returnString = "[" + v.x + "," + v.y + "," + v.z + "]";
-                return returnString;
+                sb.Append("[").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append("]");
+                return sb.ToString();
             }
             else if (o.GetType() == typeof(Vector4))
             {
                 Vector4 v = (Vector4)o;
-                string returnString = "[" + v.w + "," + v.x + "," + v.y + "," + v.z + "]";
-                return returnString;
+                sb.Append("[").Append(v.w).Append(",").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append("]");
+                return sb.ToString();
             }
             else if (o.GetType() == typeof(Quaternion))
             {
                 Quaternion v = (Quaternion)o;
-                string returnString = "[" + v.w + "," + v.x + "," + v.y + "," + v.z + "]";
-                return returnString;
+                sb.Append("[").Append(v.w).Append(",").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append("]");
+                return sb.ToString();
             }
         }
         Debug.LogWarning("Formatting Object unsuccessful. Returning empty.");

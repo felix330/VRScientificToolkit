@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Name: STKSettings
   m_EditorClassIdentifier: 
   jsonPath: C:/JSON
+  EventMaximum: 500
+  useSlidingWindow: 1
+  useDataReduction: 0
