@@ -12,16 +12,19 @@ public static class STKEventReceiver {
         if (savedEvents.ContainsKey(e.eventName))
         {
             List<STKEvent> eventsList = (List<STKEvent>)savedEvents[e.eventName];
+            eventsList.Add(e);
+            savedEvents[e.eventName] = eventsList;
             if (settings.useSlidingWindow && eventsList.Count > settings.EventMaximum) //Sliding window
             {
                 eventsList.RemoveAt(0);
             } else if (settings.useDataReduction && eventsList.Count > settings.EventMaximum)
             {
                 eventsList = ReduceListData(eventsList);
+            } else if (settings.createFileWhenFull && eventsList.Count > settings.EventMaximum)
+            {
+                STKJsonParser.SaveRunning();
             }
-                Debug.Log(eventsList.Count);
-            eventsList.Add(e);
-            savedEvents[e.eventName] = eventsList;
+            Debug.Log(eventsList.Count);
         } else
         {
             savedEvents[e.eventName] = new List<STKEvent>();
@@ -53,8 +56,14 @@ public static class STKEventReceiver {
         STKJsonParser.ReceiveEvents(savedEvents);
     }
 
+    public static Hashtable GetEvents()
+    {
+        return savedEvents;
+    }
+
     public static void ClearEvents()
     {
+        savedEvents.Clear();
         savedEvents = new Hashtable();
     }
 }

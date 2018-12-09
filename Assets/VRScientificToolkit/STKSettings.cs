@@ -13,4 +13,6 @@ public class STKSettings : ScriptableObject {
     public bool useSlidingWindow;
     [HideInInspector]
     public bool useDataReduction;
+    [HideInInspector]
+    public bool createFileWhenFull;
 }

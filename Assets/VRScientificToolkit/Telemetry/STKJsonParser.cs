@@ -12,6 +12,7 @@ public static class STKJsonParser {
     private static int currentStage = 0;
 
     private static STKSettings settings = Resources.Load<STKSettings>("STKSettings");
+    private static Hashtable latestStage;
 
 
     public static void TestStart(Hashtable p)
@@ -35,6 +36,7 @@ public static class STKJsonParser {
             }
             i++;
         }
+        latestStage = p; //Latest stage is saved in case another file is generated
     }
 
     public static void ReceiveEvents(Hashtable events)
@@ -54,7 +56,7 @@ public static class STKJsonParser {
                 int objectsIndex = 0;
                 foreach (string o in e.objects.Keys)
                 {
-                    sb.Append("\"").Append(o).Append("\": ").Append(FormatObject(e.objects[o])).Append(""); //TODO: Unterschiedung nach Datentyp
+                    sb.Append("\"").Append(o).Append("\": ").Append(FormatObject(e.objects[o])).Append("");
                     if (objectsIndex < e.objects.Keys.Count-1)
                     {
                         sb.Append(",\n");
@@ -131,6 +133,20 @@ public static class STKJsonParser {
             Debug.Log("Creating final");
             CreateFile();
         }
+    }
+
+    public static void SaveRunning() //Saves an unfinished Stage
+    {
+        ReceiveEvents(STKEventReceiver.GetEvents());
+        STKEventReceiver.ClearEvents();
+        endString = "}\n";
+        stageString[currentStage] = "\"Stage" + currentStage.ToString() + "\":" + startString + eventString + endString;
+        CreateFile();
+        startString = null;
+        stageString = null;
+        eventString = null;
+        endString = null;
+        TestStart(latestStage);
     }
 
     public static string CreateFile()
