@@ -15,8 +15,11 @@ public static class STKEventReceiver {
             if (settings.useSlidingWindow && eventsList.Count > settings.EventMaximum) //Sliding window
             {
                 eventsList.RemoveAt(0);
+            } else if (settings.useDataReduction && eventsList.Count > settings.EventMaximum)
+            {
+                eventsList = ReduceListData(eventsList);
             }
-            Debug.Log(eventsList.Count);
+                Debug.Log(eventsList.Count);
             eventsList.Add(e);
             savedEvents[e.eventName] = eventsList;
         } else
@@ -27,6 +30,22 @@ public static class STKEventReceiver {
             savedEvents[e.eventName] = eventsList;
         }
         Debug.Log("Receive");
+    }
+
+    public static List<STKEvent> ReduceListData(List<STKEvent> l) //Removes every second element from a list and return the reduced list
+    {
+        int oldLength = l.Count;
+        for (int i = 0; i < oldLength; i++)
+        {
+            if (i >= l.Count)
+            {
+                i = oldLength;
+            } else
+            {
+                l.RemoveAt(i);
+            }
+        }
+        return l;
     }
 
     public static void SendEvents()
