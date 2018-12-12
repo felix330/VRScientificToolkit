@@ -756,7 +756,17 @@ Prefab:
         type: 2}
       propertyPath: trackedObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 2063154507}
+      objectReference: {fileID: 1051663930}
+    - target: {fileID: 114209032572536312, guid: 3852b147b569c4d4daa7ab5c4aee5af1,
+        type: 2}
+      propertyPath: trackedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114209032572536312, guid: 3852b147b569c4d4daa7ab5c4aee5af1,
+        type: 2}
+      propertyPath: trackedObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 1051663930}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3852b147b569c4d4daa7ab5c4aee5af1, type: 2}
   m_IsPrefabAsset: 0
@@ -3132,7 +3142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1051663931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3205,7 +3215,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1051663930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.499, z: 0}
+  m_LocalPosition: {x: -0.1472846, y: 0.499, z: -0.03569198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3222,7 +3232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4e587abd9a01a4cba77ffb1d452b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventBase: {fileID: 11400000, guid: ead5d99b3bfd59341ac4e23186a5398e, type: 2}
+  eventBase: {fileID: 11400000, guid: d77bf7e6b0c450a4193e0af7a8d52e86, type: 2}
   eventToSend: {fileID: 0}
   trackedComponents:
   - {fileID: 1051663935}
@@ -5501,7 +5511,6 @@ GameObject:
   - component: {fileID: 2063154509}
   - component: {fileID: 2063154508}
   - component: {fileID: 2063154510}
-  - component: {fileID: 2063154511}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -5544,33 +5553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40c3b720949c7048abd802976a67d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2063154511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2063154507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4e587abd9a01a4cba77ffb1d452b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventBase: {fileID: 11400000, guid: f3eb8ec8c30335b4abe4781de33b1519, type: 2}
-  eventToSend: {fileID: 0}
-  trackedComponents:
-  - {fileID: 2063154509}
-  trackedVariableNames:
-    array:
-    - array:
-      - position
-      - rotation
-  eventVariableNames:
-    array:
-    - array:
-      - position_Transform
-      - rotation_Transform
-  timedInterval: 0
-  interval: 1
 --- !u!1 &2065730275
 GameObject:
   m_ObjectHideFlags: 0

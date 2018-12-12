@@ -152,6 +152,36 @@ public class STKEventSender : MonoBehaviour {
             }
         }
     }
+    
+    public Component GetComponentFromParameter(string parameterName)
+    {
+        for (int i = 0; i < trackedComponents.Length; i++)
+        {
+            for (int j = 0; j < eventVariableNames.array[i].array.Length; j++)
+            {
+                if (eventVariableNames.array[i].array[j] == parameterName)
+                {
+                    return trackedComponents[i];
+                }
+            }
+        }
+        return GetComponent<STKEventSender>();
+    }
+
+    public string GetVariableNameFromEventVariable(string eventVName)
+    {
+        for (int i = 0; i < trackedComponents.Length; i++)
+        {
+            for (int j = 0; j < eventVariableNames.array[i].array.Length; j++)
+            {
+                if (eventVariableNames.array[i].array[j] == eventVName)
+                {
+                    return trackedVariableNames.array[i].array[j];
+                }
+            }
+        }
+        return "";
+    }
 }
 
 

@@ -18,8 +18,10 @@ public class ReadJSonTest : MonoBehaviour {
 
     [ContextMenu("Start")]
     void Test() {
-        StreamReader reader = new StreamReader("C:\\JSON\\12-12_16-16-33.json");
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+        StreamReader reader = new StreamReader("C:\\JSON\\12-12_17-31-14.json");
         string s = reader.ReadToEnd();
+        Debug.Log(s);
         STKScenePlayback.StartPlayback(s, 0);
         STKScenePlayback.GoToPoint(0);
         /*System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");

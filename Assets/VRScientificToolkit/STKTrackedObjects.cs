@@ -13,8 +13,7 @@ public class STKTrackedObjects : MonoBehaviour {
         {
             if (g.GetComponent<STKEventSender>() == null)
             {
-                //trackedObjects.Remove(g);
-                Debug.Log("Removing");
+                trackedObjects.Remove(g);
             }
         }
     }
