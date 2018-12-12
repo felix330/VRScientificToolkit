@@ -41,7 +41,7 @@ public static class STKJsonParser {
 
     public static void ReceiveEvents(Hashtable events)
     {
-        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); //So it doesn't use commas for floats
         System.Text.StringBuilder sb = new System.Text.StringBuilder("");
         foreach (string s in events.Keys)
         {

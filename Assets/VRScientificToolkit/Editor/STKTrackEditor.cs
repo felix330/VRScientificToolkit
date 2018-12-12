@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Reflection;
+using System;
 
 public class STKTrackEditor : EditorWindow
 {
@@ -121,8 +122,7 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        //newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }), STKEventTypeChecker.getIndex(c.GetType().GetProperties()[j].GetType()));
-                        savedNames.Add(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, c.GetInstanceID().ToString() }));
+                        savedNames.Add(string.Join("", new string[] { c.GetType().GetProperties()[j].Name, "_", c.GetType().Name}));
                         numberOfProperties++;
                     }
                 }
@@ -131,14 +131,26 @@ public class STKTrackEditor : EditorWindow
                 {
                     if (trackedVariables[i][j])
                     {
-                        //newEvent.AddParameter(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }), STKEventTypeChecker.getIndex(c.GetType().GetFields()[j - c.GetType().GetProperties().Length].GetType()));
-                        savedNames.Add(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, c.GetInstanceID().ToString() }));
+                        savedNames.Add(string.Join("", new string[] { c.GetType().GetFields()[j - c.GetType().GetProperties().Length].Name, "_", c.GetType().Name }));
                         numberOfFields++;
                     }
                 }
             }
         }
 
+        try
+        {
+            STKTrackedObjects g = GameObject.Find("STKTrackedObjects").GetComponent<STKTrackedObjects>();
+            Undo.RegisterCompleteObjectUndo(g, "Added to tracked objects");
+            Undo.FlushUndoRecordObjects();
+            g.trackedObjects.Add(trackedObject);
+            EditorUtility.SetDirty(g);
+        } catch (NullReferenceException e)
+        {
+            Debug.LogError("The STKTrackedObjects GameObject was not found in the scene. Please add it to the scene from the prefabs folder.");
+        }
+
+        //Attach Eventsender
         STKEventSender s = trackedObject.AddComponent<STKEventSender>();
         s.eventBase = newEvent;
         s.SetTrackedVar(trackedComponents, trackedVariables, savedNames);
