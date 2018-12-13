@@ -17,8 +17,9 @@ public static class STKScenePlayback {
         playbackMode = true;
         trackedObjects = GameObject.Find("STKTrackedObjects").GetComponent<STKTrackedObjects>().trackedObjects;
         parsedJson = JSON.Parse(json);
+        Debug.Log(parsedJson);
         stage = stageToPlay;
-        DeactivateAllComponents();
+        //DeactivateAllComponents();
     }
 
     public static void DeactivateAllComponents()
