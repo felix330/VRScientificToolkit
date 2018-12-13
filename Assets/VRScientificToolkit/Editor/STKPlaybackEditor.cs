@@ -18,6 +18,20 @@ public class STKPlaybackEditor : EditorWindow {
     float lastTime;
     string filePath;
     bool started;
+    bool playing = false;
+    float lastSystemTime;
+
+    private void OnInspectorUpdate()
+    {
+        float t = Time.realtimeSinceStartup;
+        if (playing)
+        {
+            currentTime += t-lastSystemTime;
+            STKScenePlayback.GoToPoint(currentTime);
+            Repaint();
+        }
+        lastSystemTime = t;
+    }
 
     private void OnGUI()
     {
@@ -30,6 +44,7 @@ public class STKPlaybackEditor : EditorWindow {
             lastTime = -1;
             filePath = null;
             started = false;
+            playing = false;
         } else
         {
             EditorGUILayout.LabelField("Playback");
@@ -61,6 +76,21 @@ public class STKPlaybackEditor : EditorWindow {
                 {
                     STKScenePlayback.GoToPoint(currentTime);
                 }
+
+                if (!playing)
+                {
+                    if (GUILayout.Button("Play"))
+                    {
+                        playing = true;
+                    }
+                } else
+                {
+                    if (GUILayout.Button("Pause"))
+                    {
+                        playing = false;
+                    }
+                }
+                
 
                 lastStage = currentStage;
                 lastTime = currentTime;

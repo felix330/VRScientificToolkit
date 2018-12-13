@@ -72,7 +72,6 @@ public static class STKScenePlayback {
     {
         if (node.IsArray)
         {
-            Debug.Log("Array Detected " + node.Count);
             switch (node.Count)
             {
                 case 2:

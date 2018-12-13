@@ -3138,7 +3138,7 @@ MonoBehaviour:
       - position_Transform
       - rotation_Transform
   timedInterval: 1
-  interval: 1
+  interval: 0.05
 --- !u!1 &1101442434
 GameObject:
   m_ObjectHideFlags: 0
