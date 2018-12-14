@@ -50,19 +50,39 @@ public static class STKScenePlayback {
                 STKEvent eventBase = g.GetComponent<STKEventSender>().eventBase;
                 JSONNode currentEvent = parsedJson;
                 JSONNode events = parsedJson[("Stage" + stage.ToString())][eventBase.eventName];
-                for (int i = 0; i < events.Count; i++)
+                if (events != null)
                 {
-                    if (events[i]["time"] >= t) //Finds event closest in time to point that will be restored
+                    if (g.activeSelf == false)
                     {
-                        currentEvent = events[i];
-                        i = events.Count;
+                        g.SetActive(true);
+                        MonoBehaviour[] components = g.GetComponents<MonoBehaviour>();
+                        foreach (MonoBehaviour c in components)
+                        {
+                            c.enabled = false;
+                        }
+                        Rigidbody[] rigidbodies = g.GetComponents<Rigidbody>();
+                        foreach (Rigidbody r in rigidbodies)
+                        {
+                            r.isKinematic = true;
+                        }
                     }
-                }
-                foreach (EventParameter param in eventBase.parameters)
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        if (events[i]["time"] >= t) //Finds event closest in time to point that will be restored
+                        {
+                            currentEvent = events[i];
+                            i = events.Count;
+                        }
+                    }
+                    foreach (EventParameter param in eventBase.parameters)
+                    {
+                        Component component = g.GetComponent<STKEventSender>().GetComponentFromParameter(param.name);
+                        string name = g.GetComponent<STKEventSender>().GetVariableNameFromEventVariable(param.name);
+                        SetVariable(currentEvent[param.name], name, component, g);
+                    }
+                } else
                 {
-                    Component component = g.GetComponent<STKEventSender>().GetComponentFromParameter(param.name);
-                    string name = g.GetComponent<STKEventSender>().GetVariableNameFromEventVariable(param.name);
-                    SetVariable(currentEvent[param.name], name, component, g);
+                    g.SetActive(false);
                 }
             }
         }
