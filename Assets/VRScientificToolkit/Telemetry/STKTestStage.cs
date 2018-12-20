@@ -80,6 +80,14 @@ public class STKTestStage : MonoBehaviour{
             {
                 g.SetActive(true);
             }
+            for (int i = 0; i<GameobjectsToSendMessageTo.Count; i++)
+            {
+                GameobjectsToSendMessageTo[i].SendMessage(messagesToSend[i]);
+            }
+            foreach (GameObject g in GameobjectsToDeActivate)
+            {
+                g.SetActive(false);
+            }
             values = new Hashtable();
             foreach (STKTestControllerProperty p in properties)
             {

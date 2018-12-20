@@ -166,6 +166,7 @@ public static class STKJsonParser {
         {
             sw.Write(fullString);
         }
+        currentStage = 0;
         return fullString;
     }
 }

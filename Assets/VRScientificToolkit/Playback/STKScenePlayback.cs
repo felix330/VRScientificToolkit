@@ -45,7 +45,7 @@ public static class STKScenePlayback {
     {
         foreach (GameObject g in trackedObjects) // Goes through events with Eventsenders and finds the respective events in the JSON file
         {
-            if (g.GetComponent<STKEventSender>() != null && g.GetComponent<STKEventSender>().eventBase != null)
+            if ( g != null && g.GetComponent<STKEventSender>() != null && g.GetComponent<STKEventSender>().eventBase != null)
             {
                 STKEvent eventBase = g.GetComponent<STKEventSender>().eventBase;
                 JSONNode currentEvent = parsedJson;
@@ -78,7 +78,10 @@ public static class STKScenePlayback {
                     {
                         Component component = g.GetComponent<STKEventSender>().GetComponentFromParameter(param.name);
                         string name = g.GetComponent<STKEventSender>().GetVariableNameFromEventVariable(param.name);
-                        SetVariable(currentEvent[param.name], name, component, g);
+                        if (name != null && name != "")
+                        {
+                            SetVariable(currentEvent[param.name], name, component, g);
+                        }
                     }
                 } else
                 {
@@ -90,6 +93,7 @@ public static class STKScenePlayback {
 
     public static void SetVariable(JSONNode node, string name, Component c, GameObject g)
     {
+        Debug.Log(name);
         if (node.IsArray)
         {
             switch (node.Count)
