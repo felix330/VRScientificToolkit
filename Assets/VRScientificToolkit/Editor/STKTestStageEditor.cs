@@ -25,10 +25,12 @@ public class STKTestStageEditor : Editor {
                 if (GUILayout.Button("Add Input Property"))
                 {
                     myTarget.AddInputProperty(propertyName);
+                    propertyName = "";
                 }
                 if (GUILayout.Button("Add Toggle Property"))
                 {
                     myTarget.AddToggleProperty(propertyName);
+                    propertyName = "";
                 }
             }
             else
@@ -45,6 +47,7 @@ public class STKTestStageEditor : Editor {
                 if (GUILayout.Button("Add Button"))
                 {
                     myTarget.AddButton(buttonName);
+                    buttonName = "";
                 }
             }
             else

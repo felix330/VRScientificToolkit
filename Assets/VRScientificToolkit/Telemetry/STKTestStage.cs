@@ -29,6 +29,13 @@ public class STKTestStage : MonoBehaviour{
     private void Start()
     {
         properties = Array.ConvertAll(STKArrayTools.ClearNullReferences(properties), item => item as STKTestControllerProperty);
+        if (myController.testStages[0] == gameObject)
+        {
+            startButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Test";
+        } else
+        {
+            startButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Stage";
+        }
     }
 
     void Update()
@@ -110,17 +117,13 @@ public class STKTestStage : MonoBehaviour{
                 p.gameObject.SetActive(true);
                 p.Clear();
             }
-            Debug.Log("Point 1");
-            button.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Stage";
             foreach (GameObject g in GameobjectsToActivate)
             {
                 g.SetActive(false);
             }
             time = 0;
             timeText.transform.parent.gameObject.SetActive(false);
-            Debug.Log("Point 2");
             STKEventReceiver.SendEvents();
-            Debug.Log("Point 3");
             STKEventReceiver.ClearEvents();
             STKJsonParser.TestEnd();
             started = false;

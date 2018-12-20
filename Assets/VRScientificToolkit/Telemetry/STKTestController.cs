@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 public class STKTestController : MonoBehaviour {
 
@@ -31,6 +32,10 @@ public class STKTestController : MonoBehaviour {
     void Awake () {
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
         numberOfStages = testStages.Length;
+        foreach (GameObject g in testStages)
+        {
+            g.SetActive(false);
+        }
         testStages[0].SetActive(true);
     }
 
@@ -40,11 +45,17 @@ public class STKTestController : MonoBehaviour {
 
     public void AddStage()
     {
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         GameObject newStage = Instantiate(stagePrefab);
         newStage.transform.parent = verticalGroup.transform;
         newStage.GetComponent<STKTestStage>().myController = gameObject.GetComponent<STKTestController>();
         testStages = Array.ConvertAll(STKArrayTools.AddElement(newStage,testStages), item => item as GameObject);
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
+        foreach (GameObject g in testStages)
+        {
+            g.SetActive(false);
+        }
+        testStages[testStages.Length-1].SetActive(true);
     }
 
     public void StageEnded()
