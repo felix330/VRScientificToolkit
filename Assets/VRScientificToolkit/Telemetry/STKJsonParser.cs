@@ -39,6 +39,24 @@ public static class STKJsonParser {
         latestStage = p; //Latest stage is saved in case another file is generated
     }
 
+    public static void AddRunningProperties(Hashtable p)
+    {
+        int i = 0;
+        if (latestStage != null && latestStage.Count > 0)
+        {
+            startString += ", \n";
+        }
+        foreach (string s in p.Keys)
+        {
+            startString += "\"" + s + "\": " + FormatObject(p[s]);
+            if (i < p.Keys.Count - 1)
+            {
+                startString += ", \n";
+            }
+            i++;
+        }
+    }
+
     public static void ReceiveEvents(Hashtable events)
     {
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); //So it doesn't use commas for floats

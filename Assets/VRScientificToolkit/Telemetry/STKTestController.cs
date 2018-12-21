@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
+using UnityEditor;
 
 public class STKTestController : MonoBehaviour {
 
@@ -46,6 +47,7 @@ public class STKTestController : MonoBehaviour {
     public void AddStage()
     {
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        PrefabUtility.DisconnectPrefabInstance(gameObject);
         GameObject newStage = Instantiate(stagePrefab);
         newStage.transform.parent = verticalGroup.transform;
         newStage.GetComponent<STKTestStage>().myController = gameObject.GetComponent<STKTestController>();

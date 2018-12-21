@@ -9,6 +9,7 @@ public class STKTestStageEditor : Editor {
 
     public string propertyName;
     public string buttonName;
+    public bool startProperty = true;
 
     public override void OnInspectorGUI()
     {
@@ -22,14 +23,16 @@ public class STKTestStageEditor : Editor {
 
             if (propertyName != null && propertyName != "")
             {
+                startProperty = EditorGUILayout.Toggle(new GUIContent("Start Property", "A start property is put in before the stage is started. Otherwise it can be put in while the stage is running."),startProperty);
                 if (GUILayout.Button("Add Input Property"))
                 {
-                    myTarget.AddInputProperty(propertyName);
+                    myTarget.AddInputProperty(propertyName,startProperty);
+                    Debug.Log("Edit " + startProperty);
                     propertyName = "";
                 }
                 if (GUILayout.Button("Add Toggle Property"))
                 {
-                    myTarget.AddToggleProperty(propertyName);
+                    myTarget.AddToggleProperty(propertyName,startProperty);
                     propertyName = "";
                 }
             }

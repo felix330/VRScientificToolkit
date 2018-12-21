@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using System;
 
 public class STKTestStage : MonoBehaviour{
-    public STKTestControllerProperty[] properties;
+    public STKTestControllerProperty[] startProperties;
+    public STKTestControllerProperty[] runningProperties;
     public List<GameObject> GameobjectsToActivate = new List<GameObject>();
     public List<GameObject> GameobjectsToDeActivate = new List<GameObject>();
     public List<GameObject> GameobjectsToSendMessageTo = new List<GameObject>();
@@ -28,7 +29,12 @@ public class STKTestStage : MonoBehaviour{
 
     private void Start()
     {
-        properties = Array.ConvertAll(STKArrayTools.ClearNullReferences(properties), item => item as STKTestControllerProperty);
+        startProperties = Array.ConvertAll(STKArrayTools.ClearNullReferences(startProperties), item => item as STKTestControllerProperty);
+        runningProperties = Array.ConvertAll(STKArrayTools.ClearNullReferences(runningProperties), item => item as STKTestControllerProperty);
+        foreach (STKTestControllerProperty p in runningProperties)
+        {
+            p.gameObject.SetActive(false);
+        }
         if (myController.testStages[0] == gameObject)
         {
             startButton.GetComponent<Button>().GetComponentInChildren<Text>().text = "Start Test";
@@ -51,22 +57,35 @@ public class STKTestStage : MonoBehaviour{
         }
     }
 
-    public void AddInputProperty(string name)
+    public void AddInputProperty(string name, bool isStartProperty)
     {
         GameObject newProperty = GameObject.Instantiate(myController.inputPropertyPrefab);
         newProperty.transform.SetParent(propertyParent.transform);
         newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
-        properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(),properties), item => item as STKTestControllerProperty);
+        if (isStartProperty)
+        {
+            startProperties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), startProperties), item => item as STKTestControllerProperty);
+        } else
+        {
+            runningProperties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), runningProperties), item => item as STKTestControllerProperty);
+        }
         startButton.transform.SetParent(transform.parent);
         startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
     }
 
-    public void AddToggleProperty(string name)
+    public void AddToggleProperty(string name, bool isStartProperty)
     {
         GameObject newProperty = GameObject.Instantiate(myController.togglePropertyPrefab);
         newProperty.transform.SetParent(propertyParent.transform);
         newProperty.GetComponent<STKTestControllerProperty>().text.text = name;
-        properties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), properties), item => item as STKTestControllerProperty);
+        if (isStartProperty)
+        {
+            startProperties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), startProperties), item => item as STKTestControllerProperty);
+        }
+        else
+        {
+            runningProperties = Array.ConvertAll(STKArrayTools.AddElement(newProperty.GetComponent<STKTestControllerProperty>(), runningProperties), item => item as STKTestControllerProperty);
+        }
         startButton.transform.SetParent(transform.parent);
         startButton.transform.SetParent(propertyParent.transform); //Reset button to last position
     }
@@ -96,12 +115,14 @@ public class STKTestStage : MonoBehaviour{
                 g.SetActive(false);
             }
             values = new Hashtable();
-            foreach (STKTestControllerProperty p in properties)
+            foreach (STKTestControllerProperty p in startProperties)
             {
-                Debug.Log(p.text.text);
-                Debug.Log(p.GetValue());
                 values.Add(p.text.text, p.GetValue());
                 p.gameObject.SetActive(false);
+            }
+            foreach (STKTestControllerProperty p in runningProperties)
+            {
+                p.gameObject.SetActive(true);
             }
             if (hasTimeLimit)
             {
@@ -112,10 +133,15 @@ public class STKTestStage : MonoBehaviour{
         }
         else
         {
-            foreach (STKTestControllerProperty p in properties)
+            foreach (STKTestControllerProperty p in startProperties)
             {
                 p.gameObject.SetActive(true);
                 p.Clear();
+            }
+            foreach (STKTestControllerProperty p in runningProperties)
+            {
+                values.Add(p.text.text, p.GetValue());
+                p.gameObject.SetActive(false);
             }
             foreach (GameObject g in GameobjectsToActivate)
             {
