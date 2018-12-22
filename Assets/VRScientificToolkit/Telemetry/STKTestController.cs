@@ -13,7 +13,6 @@ public class STKTestController : MonoBehaviour {
     public GameObject inputPropertyPrefab;
     public GameObject togglePropertyPrefab;
     public GameObject buttonPrefab;
-    //public GameObject startButton;
 
     public GameObject[] startActivateObjects;
 
@@ -58,6 +57,7 @@ public class STKTestController : MonoBehaviour {
             g.SetActive(false);
         }
         testStages[testStages.Length-1].SetActive(true);
+        testStages[testStages.Length - 1].name = "Stage " + (testStages.Length - 1);
     }
 
     public void StageEnded()
