@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: STKSettings
   m_EditorClassIdentifier: 
   jsonPath: C:/JSON
-  EventMaximum: 500
+  EventMaximum: 50000
   useSlidingWindow: 0
   useDataReduction: 0
   createFileWhenFull: 1

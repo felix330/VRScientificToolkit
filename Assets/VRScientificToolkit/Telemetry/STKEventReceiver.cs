@@ -24,7 +24,6 @@ public static class STKEventReceiver {
             {
                 STKJsonParser.SaveRunning();
             }
-            Debug.Log(eventsList.Count);
         } else
         {
             savedEvents[e.eventName] = new List<STKEvent>();
@@ -32,7 +31,6 @@ public static class STKEventReceiver {
             eventsList.Add(e);
             savedEvents[e.eventName] = eventsList;
         }
-        Debug.Log("Receive");
     }
 
     public static List<STKEvent> ReduceListData(List<STKEvent> l) //Removes every second element from a list and return the reduced list
