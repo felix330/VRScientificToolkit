@@ -101,6 +101,7 @@ public class STKTestStage : MonoBehaviour{
     {
         if (!started)
         {
+            STKEventReceiver.ClearEvents();
             button.GetComponent<Button>().GetComponentInChildren<Text>().text = "Stop Stage";
             foreach (GameObject g in GameobjectsToActivate)
             {

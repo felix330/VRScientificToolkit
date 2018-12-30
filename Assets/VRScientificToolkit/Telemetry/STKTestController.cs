@@ -55,7 +55,10 @@ public class STKTestController : MonoBehaviour {
         testStages = Array.ConvertAll(STKArrayTools.ClearNullReferences(testStages), item => item as GameObject);
         foreach (GameObject g in testStages)
         {
-            g.SetActive(false);
+            if (g != null)
+            {
+                g.SetActive(false);
+            }
         }
         testStages[testStages.Length-1].SetActive(true);
         testStages[testStages.Length - 1].name = "Stage " + (testStages.Length - 1);
