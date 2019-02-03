@@ -1,6 +1,6 @@
 CreateObjectlookGraph <- function(input)
 {
-  objectLook <- input$Stage0$ObjectLook;
+  objectLook <- input;
   objectNames <- objectLook$ObjectName;
   namesList <- objectNames[1];
   for (o in objectNames)

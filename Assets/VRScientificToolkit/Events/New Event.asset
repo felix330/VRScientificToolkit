@@ -18,6 +18,12 @@ MonoBehaviour:
   - name: Attribut2
     typeIndex: 5
     hideFromInspector: 0
+  - name: Attribut2
+    typeIndex: 1
+    hideFromInspector: 0
+  - name: Attribut2
+    typeIndex: 7
+    hideFromInspector: 0
   eventName: 
   uniqueID: 0
   time: 0
