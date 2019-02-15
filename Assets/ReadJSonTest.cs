@@ -22,8 +22,6 @@ public class ReadJSonTest : MonoBehaviour {
         StreamReader reader = new StreamReader("C:\\JSON\\12-12_17-31-14.json");
         string s = reader.ReadToEnd();
         Debug.Log(s);
-        STKScenePlayback.StartPlayback(s, 0);
-        STKScenePlayback.GoToPoint(0);
         /*System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
         StreamReader reader = new StreamReader("C:\\JSON\\12-8_13-59-37.json");
         string s = reader.ReadToEnd();

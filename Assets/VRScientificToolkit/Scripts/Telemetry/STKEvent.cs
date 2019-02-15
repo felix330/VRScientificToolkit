@@ -4,58 +4,72 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
-
-[System.Serializable]
-public class EventParameter
+namespace STK
 {
-    public string name;
-    public System.Type systemType;
-    public int typeIndex; //Index in the allowedTypes Array of the STKEventTypeChecker
-    public bool hideFromInspector;
-
-    public void SetTypeFromIndex()
+    /// <summary>
+    /// Defines the parameter of an STKEvent. 
+    /// </summary>
+    [System.Serializable]
+    public class EventParameter
     {
-        systemType = STKEventTypeChecker.allowedTypes[typeIndex];
-    }
-}
+        public string name;
+        public System.Type systemType;
+        /// <summary>Index in the allowedTypes Array of the STKEventTypeChecker</summary>
+        public int typeIndex;
+        public bool hideFromInspector;
 
-[CreateAssetMenu(menuName = "VR Scientific Toolkit/STKEvent")]
-public class STKEvent : ScriptableObject
-{
-    [SerializeField]
-    public List<EventParameter> parameters = new List<EventParameter>();
-    public string eventName;
-    public Hashtable objects = new Hashtable();
-    public float time;
-
-    public void AddParameter(string name, int typeIndex) //Defines a new Parameter
-    {
-        EventParameter newParameter = new EventParameter();
-        newParameter.name = name;
-        newParameter.hideFromInspector = true;
-        newParameter.typeIndex = typeIndex;
-        parameters.Add(newParameter);
-    }
-
-    public void SetValue(string key, object value) //Sets a parameter to a certain value
-    {
-        //Test if Key exists and Value is the correct Datatype
-        foreach (EventParameter p in parameters)
+        public void SetTypeFromIndex()
         {
-            if (key == p.name)
-            {
-                if (p.systemType == null)
-                {
-                    p.SetTypeFromIndex();
-                }
+            systemType = STKEventTypeChecker.allowedTypes[typeIndex];
+        }
+    }
 
-                if (value.GetType() == p.systemType)
+    /// <summary>
+    /// Event which contains custom parameters. Can be created and deployed by an STKEventSender component. 
+    /// </summary>
+    [CreateAssetMenu(menuName = "VR Scientific Toolkit/STKEvent")]
+    public class STKEvent : ScriptableObject
+    {
+        [SerializeField]
+        public List<EventParameter> parameters = new List<EventParameter>();
+        /// <summary>Name of the Event. </summary>
+        public string eventName;
+        /// <summary>Objects are made up of a parameter name and a value</summary>
+        public Hashtable objects = new Hashtable();
+        /// <summary>Time the event was sent</summary>
+        public float time;
+
+        /// <summary>Defines a new Parameter</summary>
+        public void AddParameter(string name, int typeIndex) 
+        {
+            EventParameter newParameter = new EventParameter();
+            newParameter.name = name;
+            newParameter.hideFromInspector = true;
+            newParameter.typeIndex = typeIndex;
+            parameters.Add(newParameter);
+        }
+
+        /// <summary>Sets a parameter to a certain value</summary>
+        public void SetValue(string key, object value) 
+        {
+            //Test if Key exists and Value is the correct Datatype
+            foreach (EventParameter p in parameters)
+            {
+                if (key == p.name)
                 {
-                    objects.Add(key, value);
+                    if (p.systemType == null)
+                    {
+                        p.SetTypeFromIndex();
+                    }
+
+                    if (value.GetType() == p.systemType)
+                    {
+                        objects.Add(key, value);
+                    }
                 }
             }
-        }
-        
-    }
 
+        }
+
+    }
 }

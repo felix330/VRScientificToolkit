@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Script that stores all Gameobjects with a tracker to use in the playback module
-public class STKTrackedObjects : MonoBehaviour {
-
-    public List<GameObject> trackedObjects;
-
-    public void CheckForNullReferences() //Checks for objects which don't exist or don't have an Eventsender and removes them
+namespace STK
+{
+    ///<summary>Script that stores all Gameobjects with a tracker to use in the playback module</summary>
+    public class STKTrackedObjects : MonoBehaviour
     {
-        foreach (GameObject g in trackedObjects)
+
+        public List<GameObject> trackedObjects;
+
+        public void CheckForNullReferences() //Checks for objects which don't exist or don't have an Eventsender and removes them
         {
-            if (g == null || g.GetComponent<STKEventSender>() == null)
+            foreach (GameObject g in trackedObjects)
             {
-                trackedObjects.Remove(g);
+                if (g == null || g.GetComponent<STKEventSender>() == null)
+                {
+                    trackedObjects.Remove(g);
+                }
             }
         }
     }

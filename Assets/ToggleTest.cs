@@ -7,7 +7,7 @@ public class ToggleTest : MonoBehaviour {
     public GameObject bttn;
 	// Use this for initialization
 	void Start () {
-        GetComponent<STKTestStage>().ToggleTest(bttn);
+        GetComponent<STK.STKTestStage>().ToggleTest(bttn);
 	}
 	
 	// Update is called once per frame

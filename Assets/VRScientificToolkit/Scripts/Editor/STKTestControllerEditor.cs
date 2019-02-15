@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-
-[CustomEditor(typeof(STKTestController))]
-public class STKTestControllerEditor : Editor
+namespace STK
 {
-
-    public override void OnInspectorGUI()
+    ///<summary>Creates button to spawn new stage.</summary>
+    [CustomEditor(typeof(STKTestController))]
+    public class STKTestControllerEditor : Editor
     {
-        if (!EditorApplication.isPlaying)
+
+        public override void OnInspectorGUI()
         {
-            STKTestController myTarget = (STKTestController)target;
-            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-
-            if (GUILayout.Button(new GUIContent("Add Stage", "Add a stage to your experiment. Different stages can have different attributes.")))
+            if (!EditorApplication.isPlaying)
             {
-                myTarget.AddStage();
+                STKTestController myTarget = (STKTestController)target;
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+                GUILayout.Space(20f);
+                if (GUILayout.Button(new GUIContent("Add Stage", "Add a stage to your experiment. Different stages can have different attributes.")))
+                {
+                    myTarget.AddStage();
+                }
+                GUILayout.Space(20f);
             }
-        }
 
+        }
     }
 }

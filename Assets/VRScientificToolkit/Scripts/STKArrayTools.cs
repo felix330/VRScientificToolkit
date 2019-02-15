@@ -2,49 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//This class is used to add elements to an array and clean null references from an array
-public static class STKArrayTools{
-
-	public static object[] AddElement(object o, object[] array)
+namespace STK
+{
+    ///<summary>This class is used to add elements to an array and clean null references from an array</summary>
+    public static class STKArrayTools
     {
-        if (array == null)
-        {
-            object[] createdArray = new object[1];
-            createdArray[0] = o;
-            return createdArray;
-        }
-        object[] newArray = new object[array.Length+1];
 
-        for (int i = 0; i<array.Length; i++)
+        public static object[] AddElement(object o, object[] array)
         {
-            newArray[i] = array[i];
-        }
-
-        newArray[newArray.Length - 1] = o;
-        return newArray;
-    }
-
-    public static object[] ClearNullReferences(object[] array)
-    {
-        int numberOfObjects = 0;
-        foreach(object o in array)
-        {
-            if (o != null)
+            if (array == null)
             {
-                numberOfObjects++;
+                object[] createdArray = new object[1];
+                createdArray[0] = o;
+                return createdArray;
             }
-        }
-        object[] newArray = new object[numberOfObjects];
-        int currentindex = 0;
+            object[] newArray = new object[array.Length + 1];
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] != null)
+            for (int i = 0; i < array.Length; i++)
             {
-                newArray[currentindex] = array[i];
-                currentindex++;
+                newArray[i] = array[i];
             }
+
+            newArray[newArray.Length - 1] = o;
+            return newArray;
         }
-        return newArray;
+
+        public static object[] ClearNullReferences(object[] array)
+        {
+            int numberOfObjects = 0;
+            foreach (object o in array)
+            {
+                if (o != null)
+                {
+                    numberOfObjects++;
+                }
+            }
+            object[] newArray = new object[numberOfObjects];
+            int currentindex = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] != null)
+                {
+                    newArray[currentindex] = array[i];
+                    currentindex++;
+                }
+            }
+            return newArray;
+        }
     }
 }
