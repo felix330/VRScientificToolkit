@@ -46,45 +46,47 @@ public static class STKScenePlayback {
         {
             if ( g != null && g.GetComponent<STKEventSender>() != null && g.GetComponent<STKEventSender>().eventBase != null)
             {
-                STKEvent eventBase = g.GetComponent<STKEventSender>().eventBase;
-                JSONNode currentEvent = parsedJson;
-                JSONNode events = parsedJson[("Stage" + stage.ToString())][eventBase.eventName];
-                if (events != null)
+                STKEventSender[] senders = g.GetComponents<STKEventSender>();
+                g.SetActive(false);
+                foreach (STKEventSender s in senders)
                 {
-                    if (g.activeSelf == false)
+                    STKEvent eventBase = s.eventBase;
+                    JSONNode currentEvent = parsedJson;
+                    JSONNode events = parsedJson[("Stage" + stage.ToString())][eventBase.eventName];
+                    if (events != null)
                     {
-                        g.SetActive(true);
-                        MonoBehaviour[] components = g.GetComponents<MonoBehaviour>();
-                        foreach (MonoBehaviour c in components)
+                        if (g.activeSelf == false)
                         {
-                            c.enabled = false;
+                            g.SetActive(true);
+                            MonoBehaviour[] components = g.GetComponents<MonoBehaviour>();
+                            foreach (MonoBehaviour c in components)
+                            {
+                                c.enabled = false;
+                            }
+                            Rigidbody[] rigidbodies = g.GetComponents<Rigidbody>();
+                            foreach (Rigidbody r in rigidbodies)
+                            {
+                                r.isKinematic = true;
+                            }
                         }
-                        Rigidbody[] rigidbodies = g.GetComponents<Rigidbody>();
-                        foreach (Rigidbody r in rigidbodies)
+                        for (int i = 0; i < events.Count; i++)
                         {
-                            r.isKinematic = true;
+                            if (events[i]["time"] >= t) //Finds event closest in time to point that will be restored
+                            {
+                                currentEvent = events[i];
+                                i = events.Count;
+                            }
+                        }
+                        foreach (EventParameter param in eventBase.parameters)
+                        {
+                            Component component = s.GetComponentFromParameter(param.name);
+                            string name = s.GetVariableNameFromEventVariable(param.name);
+                            if (name != null && name != "")
+                            {
+                                SetVariable(currentEvent[param.name], name, component, g);
+                            }
                         }
                     }
-                    for (int i = 0; i < events.Count; i++)
-                    {
-                        if (events[i]["time"] >= t) //Finds event closest in time to point that will be restored
-                        {
-                            currentEvent = events[i];
-                            i = events.Count;
-                        }
-                    }
-                    foreach (EventParameter param in eventBase.parameters)
-                    {
-                        Component component = g.GetComponent<STKEventSender>().GetComponentFromParameter(param.name);
-                        string name = g.GetComponent<STKEventSender>().GetVariableNameFromEventVariable(param.name);
-                        if (name != null && name != "")
-                        {
-                            SetVariable(currentEvent[param.name], name, component, g);
-                        }
-                    }
-                } else
-                {
-                    g.SetActive(false);
                 }
             }
         }

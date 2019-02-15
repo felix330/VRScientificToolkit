@@ -150,13 +150,13 @@ public static class STKJsonParser {
             else if (o.GetType() == typeof(Vector4))
             {
                 Vector4 v = (Vector4)o;
-                sb.Append("[").Append(v.w).Append(",").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append("]");
+                sb.Append("[").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append(",").Append(v.w).Append("]");
                 return sb.ToString();
             }
             else if (o.GetType() == typeof(Quaternion))
             {
                 Quaternion v = (Quaternion)o;
-                sb.Append("[").Append(v.w).Append(",").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append("]");
+                sb.Append("[").Append(v.x).Append(",").Append(v.y).Append(",").Append(v.z).Append(",").Append(v.w).Append("]");
                 return sb.ToString();
             }
         }

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ddec862d19d4674b90cbebf15eafc4c, type: 3}
-  m_Name: TrackRandomMoveCube6056
+  m_Name: TrackCamera16770
   m_EditorClassIdentifier: 
   parameters:
   - name: position_Transform
@@ -18,6 +18,5 @@ MonoBehaviour:
   - name: rotation_Transform
     typeIndex: 7
     hideFromInspector: 1
-  eventName: RandomMoveCube6056
-  uniqueID: 0
+  eventName: Camera16770
   time: 0
