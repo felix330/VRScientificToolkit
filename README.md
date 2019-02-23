@@ -1,6 +1,8 @@
-# VRScientificToolkit
+# Scientific Virtual Reality Toolkit
 
-MIT License
+The Scientific Virtual Reality Toolkit facilitates the creation and execution of experiments in VR environments.
+
+# MIT License
 
 Copyright (c) 2019 Felix Gähr
 
